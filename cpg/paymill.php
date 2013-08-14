@@ -1,0 +1,223 @@
+<?php
+/**
+ *  @copyright  Copyright (c) 2009-2013 TechJoomla. All rights reserved.
+ *  @license    GNU General Public License version 2, or later
+ */
+defined( '_JEXEC' ) or die( 'Restricted access' );
+jimport( 'joomla.filesystem.file' );
+jimport( 'joomla.plugin.plugin' );
+
+if(JVERSION >='1.6.0')
+	require_once(JPATH_SITE.'/plugins/payment/paymill/paymill/helper.php');
+else
+	require_once(JPATH_SITE.'/plugins/payment/paymill/helper.php');
+//Set the language in the class
+$lang =  JFactory::getLanguage();
+$lang->load('plg_payment_paymill', JPATH_ADMINISTRATOR);
+
+class plgpaymentpaymill extends JPlugin 
+{
+	var $_payment_gateway = 'payment_paymill';
+	var $_log = null;
+	
+	function __construct(& $subject, $config)
+	{
+		parent::__construct($subject, $config);
+		
+		$config = JFactory::getConfig();
+		//PUBLIC_KEY IN JS 
+		//PRIVATE_KEY IN API KEY
+		//Define Payment Status codes in Authorise  And Respective Alias in Framework
+		//closed = Approved, Pending = Declined, failed = Error, open = Held for Review
+		$this->responseStatus= array(
+			'closed' =>'C',
+			'Pending' =>'D',
+			'failed' =>'E',
+			'open'=>'UR'
+		);
+		//error code in api error
+		$this->code_arr = array (
+		'internal_server_error'       => JText::_('INTERNAL_SERVER_ERROR'),
+		'invalid_public_key'    	  => JText::_('INVALID_PUBLIC_KEY'),
+		'unknown_error'               => JText::_('UNKNOWN_ERROR'),	
+		'3ds_cancelled'               => JText::_('3DS_CANCELLED'),
+		'field_invalid_card_number'   => JText::_('FIELD_INVALID_CARD_NUMBER'),
+		'field_invalid_card_exp_year' => JText::_('FIELD_INVALID_CARD_EXP_YEAR'),
+		'field_invalid_card_exp_month'=> JText::_('FIELD_INVALID_CARD_EXP_MONTH'),
+		'field_invalid_card_exp'      => JText::_('FIELD_INVALID_CARD_EXP'),
+		'field_invalid_card_cvc'      => JText::_('FIELD_INVALID_CARD_CVC'),
+		'field_invalid_card_holder'   => JText::_('FIELD_INVALID_CARD_HOLDER'),
+		'field_invalid_amount_int'    => JText::_('FIELD_INVALID_AMOUNT_INT'),
+		'field_invalid_amount'        => JText::_('FIELD_INVALID_AMOUNT'),
+		'field_invalid_currency'      => JText::_('FIELD_INVALID_CURRENCY'),
+		'field_invalid_account_number'=> JText::_('FIELD_INVALID_AMOUNT_NUMBER'),
+		'field_invalid_account_holder'=> JText::_('FIELD_INVALID_ACCOUNT_HOLDER'),
+		'field_invalid_bank_code'     => JText::_('FIELD_INVALID_BANK_CODE')
+		);
+		$this->public_key = $this->params->get('public_key');
+		$this->private_key = $this->params->get( 'private_key');
+		$this->testmode = $this->params->get( 'payment_mode', '1' );	
+	}
+	
+	/* Internal use functions */
+	function buildLayoutPath($layout="default") {
+		if(empty($layout))
+			$layout="default";
+		$app = JFactory::getApplication();
+		$core_file 	= dirname(__FILE__).DS.$this->_name.DS.'tmpl'.DS.$layout.'.php';
+		$override		= JPATH_BASE.DS.'templates'.DS.$app->getTemplate().DS.'html'.DS.'plugins'.DS.$this->_type.DS.$this->_name.DS.$layout.'.php';
+		if(JFile::exists($override))
+		{
+			return $override;
+		}
+		else
+		{
+			return  $core_file;
+		}
+	}
+	
+	//Builds the layout to be shown, along with hidden fields.
+	function buildLayout($vars, $layout = 'default' )
+	{
+		// Load the layout & push variables
+		ob_start();
+		$layout = $this->buildLayoutPath($layout);
+		include($layout);
+		$html = ob_get_contents(); 
+		ob_end_clean();
+		return $html;
+	}
+	//gets param values
+    function getParamResult($name, $default = '') 
+    {
+		
+    	$sandbox_param = "sandbox_$name";
+    	$sb_value = $this->params->get($sandbox_param);
+    	
+        if ($this->params->get('sandbox') && !empty($sb_value)) {
+            $param = $this->params->get($sandbox_param, $default);
+        }
+        else {
+        	$param = $this->params->get($name, $default);
+        }
+        
+        return $param;
+    }
+
+	// Used to Build List of Payment Gateway in the respective Components
+	function onTP_GetInfo($config)
+	{
+		if(!in_array($this->_name,$config))
+		return;
+		$obj 		= new stdClass;
+		$obj->name 	= $this->params->get( 'plugin_name' );
+		$obj->id	= $this->_name;
+		return $obj;
+	}
+	
+	
+	//Constructs the Payment form in case of On Site Payment gateways like Auth.net & constructs the Submit button in case of offsite ones like Paypal
+	function onTP_GetHTML($vars)
+	{
+		$session = JFactory::getSession();
+		$session->set('amount', $vars->amount);
+		$session->set('currency_code', $vars->currency_code);
+		if(!empty($vars->payment_type) and $vars->payment_type!='')
+			$payment_type=$vars->payment_type;
+		else
+			$payment_type='';
+		$html = $this->buildLayout($vars,$payment_type);
+		return $html;
+	}
+	
+	function onTP_Processpayment($data) 
+	{
+		//API HOST KEY
+		define('PAYMILL_API_HOST', 'https://api.paymill.com/v2/');
+		//FROM PAYMILL PLUGIN BACKEND 
+		define('PAYMILL_API_KEY', $this->private_key);
+		set_include_path(implode(PATH_SEPARATOR, array(realpath(realpath(dirname(__FILE__)) . '/lib'),get_include_path(),)));
+		//CREATED TOKEN 
+		$token = $data["token"];
+		$session = JFactory::getSession();
+		if ($token) 
+		{
+				// access lib folder
+				require "paymill/lib/Services/Paymill/Transactions.php";
+				//pass api key and private key to Services_Paymill_Transactions function
+				$transactionsObject = new Services_Paymill_Transactions(PAYMILL_API_KEY, PAYMILL_API_HOST);
+
+				$params = array(
+				'amount'      => ($session->get('amount') *100), //amount *100
+				'currency'    => $session->set('currency_code') ,   // ISO 4217
+				'token'       => $token,
+				'description' => 'Test Transaction'
+				);
+				$transaction = $transactionsObject->create($params);
+				
+				if($transaction['error'])
+				{
+					$result = array('transaction_id'=>'',
+								'order_id'=>$data["order_id"],
+								'status'=>'E',
+								'total_paid_amt'=>'0',
+								'raw_data'=>'',
+								'error'=>$transaction['error'],
+								'return'=>$data['return']
+								);
+								return $result;
+				}
+				else
+				{
+					//if error not find 
+					//$status varible
+					$status=$this->translateResponse($transaction['status']);
+					//array pass to translate function 
+					$result = array('transaction_id'=>$transaction['id'],
+									'order_id'=>$data["order_id"],
+									'status'=>$status,
+									'total_paid_amt'=>$transaction['origin_amount'],
+									'raw_data'=>json_encode($transaction),
+									'error'=>$transaction['error'],
+									'return'=>$data['return']
+									);
+									
+									return $result;
+				}
+			
+		
+		}
+		else
+		{
+			$result = array('transaction_id'=>'',
+								'order_id'=>$data["order_id"],
+								'status'=>'E',
+								'total_paid_amt'=>'0',
+								'raw_data'=>'',
+								'error'=>$transaction['error'],
+								'return'=>$data['return']
+								);
+			return $result;
+			
+		}//end if token
+	}
+	
+	//translate response in required format
+	function translateResponse($payment_status)
+	{
+			foreach($this->responseStatus as $key=>$value)
+			{
+				if($key==$payment_status)
+				return $value;		
+			}
+	}
+	
+	//store order log in log files
+	function onTP_Storelog($data)
+	{
+			$log = plgPaymentpaymillHelper::Storelog($this->_name,$data);
+	
+	}
+	
+}
+

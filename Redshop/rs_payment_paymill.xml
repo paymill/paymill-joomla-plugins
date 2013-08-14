@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5.0" type="plugin" group="redshop_payment" method="upgrade">
+    <name>Paymill</name>
+    <version>1.2</version>
+    <creationDate>April 2013</creationDate>
+    <author>redCOMPONENT.com</author>
+    <authorEmail>email@redcomponent.com</authorEmail>
+    <authorUrl>www.redweb.dk</authorUrl>
+    <copyright>redCOMPONENT.com</copyright>
+    <license>GNU General Public License v2</license>
+    <description>This plugin enables standard Paypal payments</description>
+    <files>
+        <filename plugin="rs_payment_paymill">rs_payment_paymill.php</filename>
+        <folder>rs_payment_paymill</folder>
+    </files>
+    <languages>
+        <language tag="en-GB">en-GB.plg_redshop_payment_paymill.ini</language>
+    </languages>
+    <config addfieldpath="/administrator/components/com_redshop/elements">
+       <fields name="params">
+			<fieldset name="basic">
+			 <field name="public_key" type="text" default="" label="public key" description="Public key Description"/> 
+			 <field name="private_key" type="text" default="" label="Private Key" description="Private key Description"/>  
+						<field name="payment_mode" type="radio" default="0" label="Payment Mode" description="Payment Mode">
+						<option value="true">Test</option>
+						<option value="false">Live</option>
+			 </field>
+		     <field name="currency" type="list" default="0" label="Paypal Currency" description="Paypal Currency Desc">
+						<option value="DKK">Danish Kroner (DKK)</option>
+						<option value="EUR">Euro (EUR)</option>
+						<option value="USD">US Dollar $ (USD)</option>
+						<option value="GBP">English Pound £ (GBP)</option>
+						<option value="SEK">Swedish Kroner (SEK)</option>
+						<option value="AUD">Australian Dollar (AUD)</option>
+						<option value="CAD">Canadian Dollar (CAD)</option>
+						<option value="ISK">Icelandic Kroner (ISK)</option>
+						<option value="INR">Indian Rupess (Rs)</option>
+						<option value="JPY">Japanese Yen (JPY)</option>
+						<option value="NZD">New Zealand Dollar (NZD)</option>
+						<option value="NOK">Norwegian Kroner (NOK)</option>
+						<option value="CHF">Swiss Franc (CHF)</option>
+						<option value="TRY">Turkish Lire (TRY)</option>
+						<option value="ILS">New Israeli Shekel (ILS)</option>
+			 </field>
+			</fieldset>
+		</fields>
+    </config>
+</extension>
