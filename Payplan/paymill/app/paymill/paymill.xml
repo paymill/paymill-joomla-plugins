@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <name>Paymill</name>
+    <author>Techjoomla.com</author>
+    <authorEmail>support@techjoomla.com</authorEmail>
+    <authorUrl>http://www.techjoomla.com</authorUrl>
+    <copyright>2009 techjoomla.com</copyright>
+    <icon>paymill-logo.png</icon>
+    <description>
+    	paymill
+    </description>
+    <tags>payment</tags>
+    <help> please check paymill.com site </help>
+	<params addpath="/components/com_payplans/elements">
+		<param	name="public_key" 	
+				default="" 		
+				type="xitext" 	
+				size="50" 
+				label="Public Key"  
+				description="Public Key" 
+				/>
+				
+		<param	name="private_key" 	
+				default="" 		
+				type="xitext" 	
+				size="50" 
+				label="private key"  
+				description="private key" 
+				/>
+		  		
+        <param  name="type" 
+        		type="radio" 
+        		default="" 
+        		label="Payment type" 
+        		description="Payment type">
+		          <option value="0">Test</option>
+		          <option value="1">Live</option>
+        		</param>
+        		
+     
+	</params>
+
+</config>
+
