@@ -1,13 +1,9 @@
 <?php
 if(defined('_JEXEC')===false) die();
+$url = JURI::base().'plugins/payplans/paymill/paymill/app/paymill/tmpl/ajax_loader.gif';
 		if(JVERSION <= '2.5.9')
 		{
 			echo '<link href="plugins/redshop_payment/payplans/payplans/paymill.css" rel="stylesheet">';
-			$url = JURI::base().'plugins/redshop_payment/paymill/paymill/tmpl/ajax_loader.gif';
-		}
-		else
-		{
-				$url = JURI::base().'plugins/redshop_payment/paymill/paymill/tmpl/ajax_loader.gif';
 		}
 		$code_arr= json_encode($code_arr);
 		if($this->getAppParam('type') == '0')
