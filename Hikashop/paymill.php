@@ -131,7 +131,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		$url = JURI::base().'plugins/hikashoppayment/paymill/img/ajax_loader.gif';
 		if(JVERSION <= '2.5.9')
 		{
-				$method->custom_html .='<link href="plugins/hikashoppayment/paymill/paymill.css" rel="stylesheet">';
+				$method->custom_html .='<link href="'.JURI::base().'plugins/hikashoppayment/paymill/css/paymill.css" rel="stylesheet">';
 		}
 		$method->custom_html .='
 			<style>
