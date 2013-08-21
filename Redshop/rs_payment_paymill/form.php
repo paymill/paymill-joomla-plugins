@@ -14,8 +14,14 @@ else
 }
 $order->order_subtotal = $order_details->order_total;
 $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=order_detail&controller=order_detail&task=notify_payment&payment_plugin=rs_payment_paymill&Itemid=$Itemid&orderid=" .$data['order_id'];		
+$url = JURI::base().'plugins/redshop_payment/rs_payment_paymill/rs_payment_paymill/ajax_loader.gif';
+		if(JVERSION <= '2.5.9')
+		{
+			echo '<link href="plugins/redshop_payment/rs_payment_paymill/rs_payment_paymill/paymill.css" rel="stylesheet">';
+		}
 ?>
 <!-- hidden from for token save-->
+
 <style>
 .error
 {			padding : 5px;
@@ -24,6 +30,7 @@ $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=or
 			border-color: #EED3D7;
 			color: #B94A48;
 }
+.payment-errors {color:red;}
 </style>
 	     <script type="text/javascript" src="https://bridge.paymill.com/"></script>
       
@@ -45,7 +52,7 @@ $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=or
 
 		function submitme()
 		{
-     
+				jQuery('#paymill_button').attr("disabled", "disabled");
 				var payment_type = jQuery('#payment_type').val();
 				
 				if(payment_type == 'cc')
@@ -102,7 +109,7 @@ $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=or
 				jQuery.each(slab[0], function(index, element) {
 					if(index == error.apierror){
 						var version = '<?php echo JVERSION;?>';
-						if(version > "2.5.9")
+						if(version <= "2.5.9")
 						{
 							jQuery(".payment-errors").addClass('alert alert-error');
 						}
@@ -110,6 +117,7 @@ $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=or
 						{
 							jQuery(".payment-errors").addClass('error');
 						}
+						jQuery('#paymill_button').removeAttr("disabled");    
 						jQuery(".payment-errors").text(element);
 					}
 				});
@@ -117,9 +125,12 @@ $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=or
 			}
 			else
 			{
+					jQuery("#loadder").css("display", "block");
+					//jQuery("#field").css("display", "none");
+					jQuery('#paymill_button').attr("disabled", "disabled");
 					jQuery('#token').val(result.token);
 					jQuery('#card-tds-form').submit();
-				
+					//jQuery("#loadder").css("display", "none");
 			}
 
         }
@@ -133,14 +144,14 @@ $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=or
         }
         </script>
       
-        <style>
-        .payment-errors {color:red;}
-        </style>
+        
        
 			<div class="payment-errors"></div>
 			<!-- display from-->
+			<div id="loadder" style="display:none;text-align:center;"><img src="<?php echo $url;?>"/></div>
             <div class="akeeba-bootstrap">
                     <form id="card-tds-form" name="second" action="<?php echo $returnUrl;?>" method="POST" class="form-validate form-horizontal">
+						<div id="field">
 						<div class="control-group">
 								<label class="control-label"><?php echo JText::_('NAME') ;?></label>
 								<div class="controls"><input class="card-holdername"  type="text" size="20" value="<?php echo $vars->user_firstname;?>" />
@@ -189,19 +200,19 @@ $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=or
                         </div>
                         <div style="display:none;"class="control-group">
 								<label class="control-label"><?php echo JText::_('AMOUNT') ;?></label>
-								<div class="controls"><input class="card-amount" type="text" size="4" value="<?php echo $data['order_subtotal'];?>" /></div>
+								<div class="controls"><input class="card-amount" type="text" size="4" value="<?php echo $data['carttotal'];?>" /></div>
 						</div>
                         <div style="display:none;" class="control-group">
 							<label class="control-label"><?php echo JText::_('CURRENCY') ;?></label>
-							<div class="controls"><input class="card-currency" type="text" size="4" value="<?php echo "USD";?>" /></div>
+							<div class="controls"><input class="card-currency" type="text" size="4" value="<?php echo $currency_main;?>" /></div>
                        </div></div>
 						<input type="hidden" name="token"  id="token"  value="" />
 						<input type="hidden" name="card-currency" size="10" value="<?php echo $currency_main;?>" />
-						<input type="hidden" name="card-amount" size="10" value="<?php echo $data['order_subtotal'];?>" />
+						<input type="hidden" name="card-amount" size="10" value="<?php echo $data['carttotal'];?>" />
 						<input type="hidden" name="order_id" size="10" value="<?php echo $data['order_id'];?>" />
 						<input type="hidden" name="plugin_payment_method" value="onsite" />
-				
-                       <div class="form-actions"> <input  onclick="submitme();" type="button" value="<?php echo  JText::_('SUBMIT') ;?>"/></div>
+						</div>
+                       <div class="form-actions"> <input id="paymill_button" class="btn btn-primary pull-right" onclick="submitme();" type="button" value="<?php echo  JText::_('SUBMIT') ;?>"/></div>
                     </form>
                 </div>
 
