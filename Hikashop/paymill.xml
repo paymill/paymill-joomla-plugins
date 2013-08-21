@@ -12,6 +12,9 @@
 	<files>
 		<filename plugin="paymill">paymill.php</filename>
 		<filename>paymill_thanks.php</filename>
+		<folder>img</folder>
+		<folder>css</folder>
+		<folder>lib</folder>
 	</files>
 	<params addpath="/components/com_hikashop/params">
 		<param name="pluginoptions" type="pluginoptions" default="plugin" label="hikashop" description="HikaShop options" />

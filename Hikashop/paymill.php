@@ -127,7 +127,13 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 			$threediv = 'none';
 		}
 		//from html layout	
-		$method->custom_html='
+		
+		$url = JURI::base().'plugins/hikashoppayment/paymill/img/ajax_loader.gif';
+		if(JVERSION <= '2.5.9')
+		{
+				$method->custom_html .='<link href="plugins/hikashoppayment/paymill/paymill.css" rel="stylesheet">';
+		}
+		$method->custom_html .='
 			<style>
 			#hikashop_payment_methods table div {
 			height: auto !important;
@@ -177,6 +183,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		
 		function submitme()
 		{
+			jQuery("#paymill_button").attr("disabled", "disabled");
 			if(jQuery("#token").val())
 			{
 				document.forms["hikashop_checkout_form"].submit();
@@ -245,13 +252,15 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 						{
 							jQuery(".payment-errors").addClass("error");
 						}
-						
+						jQuery("#paymill_button").removeAttr("disabled");
 						jQuery(".payment-errors").text(element);
 					}
 				});
 			}
 			else
 			{
+					jQuery("#loadder").css("display", "block");
+					jQuery("#paymill_button").attr("disabled", "disabled");
 					jQuery("#token").val(result.token);
 					document.forms["hikashop_checkout_form"].submit();
 			}
@@ -268,6 +277,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
         </script>
         <div id="paymill_plugin" style="display:'.$maindiv.';">
 			<!-- display from-->
+			<div id="loadder" style="display:none;text-align:center;"><img src="'.$url.'"/></div>
             <div class="akeeba-bootstrap">
             <!-- error display div-->
             <div class="payment-errors"></div>
