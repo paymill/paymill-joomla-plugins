@@ -1,6 +1,14 @@
 <?php
-if(defined('_JEXEC')===false) die();?>
-<?php
+if(defined('_JEXEC')===false) die();
+		if(JVERSION <= '2.5.9')
+		{
+			echo '<link href="plugins/redshop_payment/payplans/payplans/paymill.css" rel="stylesheet">';
+			$url = JURI::base().'plugins/redshop_payment/paymill/paymill/tmpl/ajax_loader.gif';
+		}
+		else
+		{
+				$url = JURI::base().'plugins/redshop_payment/paymill/paymill/tmpl/ajax_loader.gif';
+		}
 		$code_arr= json_encode($code_arr);
 		if($this->getAppParam('type') == '0')
 		{
@@ -33,7 +41,7 @@ if(defined('_JEXEC')===false) die();?>
 
 		function submitme()
 		{
-			
+			jQuery('#pp-payment-app-buy').attr("disabled", "disabled");
 				var payment_type = jQuery('#payment_type').val();
 				if(payment_type == 'cc')
 				{
@@ -99,13 +107,15 @@ if(defined('_JEXEC')===false) die();?>
 						{
 							jQuery(".payment-errors").addClass("error");
 						}
-						
+						jQuery('#pp-payment-app-buy').removeAttr("disabled");    
 						jQuery(".payment-errors").text(element);
 					}
 				});
 			}
 			else
 			{
+					jQuery("#loadder").css("display", "block");
+					jQuery('#pp-payment-app-buy').attr("disabled", "disabled");
 					jQuery('#token').val(result.token);
 					jQuery('#checkout_form').submit();
 			}
@@ -135,6 +145,7 @@ if(defined('_JEXEC')===false) die();?>
 	<form method="post" action="<?php echo $post_url;?>" id="checkout_form">
 		<fieldset class="pp-parameter pp-small">
 		<div class="payment-errors"></div>
+		<div id="loadder" style="display:none;text-align:center;"><img src="<?php echo $url;?>"/></div>
       	<legend><?php echo XiText::_('COM_PAYPLANS_PAYMENT_APP_AUTHORIZE_CREDIT_CARD_DETAILS');?></legend>
       	<div  class="pp-primary pp-color pp-background pp-bold">         
          <?php  $currency = $invoice->getCurrency();
