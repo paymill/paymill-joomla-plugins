@@ -66,34 +66,35 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 	
 	function needCC(&$method) 
 	{
-		if($_REQUEST)
+		//print_r(JRequest::get('POST'));
+		if(JRequest::get('POST'))
 		{
-			$nm = $_REQUEST['paymill-card-nm'];
-			$no = $_REQUEST['paymill-card-no'];
+			$nm =  JRequest::getInt('paymill-card-nm');
+			$no = JRequest::getInt('paymill-card-no');
 			
 			$xreplace = substr($no,0,12);
 			$replace_no= str_replace($xreplace,"xxxxxxxxxxxx",$no);
 			
-			$ex_mm = $_REQUEST['paymill-card-ex-mm'];
-			$ex_yy = $_REQUEST['paymill-card-ex-yy'];
-			$ex_cvc = $_REQUEST['paymill-card-ex-cvc'];
-			$token = $_REQUEST['token'];
-			$ac_no = $_REQUEST['paymill-card-acc-no'];
-			$bank_no = $_REQUEST['paymill-card-bank-no'];
-			$acc_country = $_REQUEST['paymill-card-acc-country'];
-			$PAYMENT_TYPE= $_REQUEST['PAYMENT_TYPE'];
+			$ex_mm = JRequest::getInt('paymill-card-ex-mm');
+			$ex_yy = JRequest::getInt('paymill-card-ex-yy');
+			$ex_cvc = JRequest::getInt('paymill-card-ex-cvc');
+			$token = JRequest::getInt('token');
+			$ac_no = JRequest::getVar('paymill-card-acc-no');
+			$bank_no = JRequest::getVar('paymill-card-bank-no');
+			$acc_country =JRequest::getVar('paymill-card-acc-country');
+			$PAYMENT_TYPE= JRequest::getVar('PAYMENT_TYPE');
 		}
-		if(!isset($_REQUEST['PAYMENT_TYPE']))
+		/*if(!isset(JRequest::getVar('PAYMENT_TYPE')))
 		{
 			$checkcc = 'selected';
 			$style= 'none';
 		}
-		else if($_REQUEST['PAYMENT_TYPE'] == 'cc')
+		else*/ if(JRequest::getVar('PAYMENT_TYPE') == 'cc')
 		{
 			$checkcc = 'selected';
 			$style= 'none';
 		}
-		else if($_REQUEST['PAYMENT_TYPE'] == 'dc')
+		else if(JRequest::getVar('PAYMENT_TYPE') == 'dc')
 		{
 			$checkdc = 'selected';
 			$style= 'block';
@@ -105,10 +106,10 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 			$style= 'none';
 			
 		}
-		if($_REQUEST['token'])
+		if(JRequest::getInt('token'))
 		{
 			$maindiv = 'none';
-			if($_REQUEST['PAYMENT_TYPE'] == 'cc')
+			if(JRequest::getVar('PAYMENT_TYPE') == 'cc')
 			{
 				$secondiv = 'block';
 				$threediv = 'none';
@@ -170,6 +171,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 				// payment type mode 
 				function ChangeDropdowns(value)
 				{
+					alert("dssdf");
 				   if(value=="cc")
 				   {
 					   jQuery("#cc").css("display", "block");
@@ -358,7 +360,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		if(parent::onBeforeOrderCreate($order, $do) === true)
 		return true;
 		$this->ccLoad();
-		$token = $_REQUEST['token'];
+		$token =JRequest::getVar('token');
 		
 		define('PAYMILL_API_HOST', 'https://api.paymill.com/v2/');
 		//FROM PAYMILL PLUGIN BACKEND 

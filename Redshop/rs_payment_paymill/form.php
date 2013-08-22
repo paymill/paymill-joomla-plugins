@@ -14,11 +14,11 @@ else
 }
 $order->order_subtotal = $order_details->order_total;
 $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=order_detail&controller=order_detail&task=notify_payment&payment_plugin=rs_payment_paymill&Itemid=$Itemid&orderid=" .$data['order_id'];		
-$url = JURI::base().'plugins/redshop_payment/rs_payment_paymill/rs_payment_paymill/ajax_loader.gif';
-		if(JVERSION <= '2.5.9')
-		{
-			echo '<link href="plugins/redshop_payment/rs_payment_paymill/rs_payment_paymill/paymill.css" rel="stylesheet">';
-		}
+$url = JURI::ROOT().'plugins/redshop_payment/rs_payment_paymill/rs_payment_paymill/ajax_loader.gif';
+if(JVERSION <= '2.5.9')
+{
+	echo '<link href="plugins/redshop_payment/rs_payment_paymill/rs_payment_paymill/paymill.css" rel="stylesheet">';
+}
 ?>
 <!-- hidden from for token save-->
 

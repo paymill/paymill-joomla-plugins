@@ -1,5 +1,14 @@
 <?php 
 $jsonarr= json_encode($this->code_arr);
+if(JVERSION <= '2.5.9')
+		{
+				echo '<link href="plugins/payment/paymill/paymill/tmpl/paymill.css" rel="stylesheet">';
+				$urlme = JURI::base().'plugins/payment/paymill/paymill/tmpl/ajax_loader.gif';
+		}
+		else
+		{
+				$urlme = JURI::ROOT().'plugins/payment/paymill/paymill/tmpl/ajax_loader.gif';
+		}
 ?>		
 <style>
 .error
@@ -38,6 +47,7 @@ var PAYMILL_TEST_MODE  = <?php echo $t;?>;
 
 		function submitme()
 		{
+			jQuery('#paymill_button').attr("disabled", "disabled");
 			var payment_type = jQuery('#payment_type').val();
 			
 			if(payment_type == 'cc')
@@ -101,6 +111,7 @@ var PAYMILL_TEST_MODE  = <?php echo $t;?>;
 						{
 							jQuery(".payment-errors").addClass('error');
 						}
+						jQuery('#paymill_button').removeAttr("disabled");                 
 						jQuery(".payment-errors").text(element);
 					}
 				});
@@ -108,8 +119,13 @@ var PAYMILL_TEST_MODE  = <?php echo $t;?>;
 			}
 			else
 			{
+					jQuery("#loadder").css("display", "block");
+					//jQuery("#field").css("display", "none");
+					jQuery('#paymill_button').attr("disabled", "disabled");
 					jQuery('#token').val(result.token);
 					jQuery('#card-tds-form').submit();
+					//jQuery("#loadder").css("display", "none");
+					
 			}
 
         }
@@ -125,8 +141,11 @@ var PAYMILL_TEST_MODE  = <?php echo $t;?>;
 
 	<div class="payment-errors"></div>
 	<!-- display from layout-->
+	<div id="loadder" style="display:none;text-align:center;"><img src="<?php echo $urlme; ?>"/></div>
     <div class="akeeba-bootstrap">
+			
 			<form id="card-tds-form" name="second" action="<?php echo $vars->url; ?>" method="POST" class="form-validate form-horizontal">
+				<div id="field">
 				<div class="control-group">
 						<label class="control-label"><?php echo JText::_('NAME') ;?></label>
 						<div class="controls"><input class="card-holdername"  type="text" size="20" value="<?php echo $vars->user_firstname;?>" />
@@ -183,7 +202,8 @@ var PAYMILL_TEST_MODE  = <?php echo $t;?>;
 				<input type="hidden" name="plugin_payment_method" value="onsite" />
 				
 			   </div></div>
-			   <div class="form-actions"> <input  onclick="submitme();" type="button" value="<?php echo  JText::_('SUBMIT') ;?>"/></div>
+			   </div>
+			   <div class="form-actions"> <input id="paymill_button"  onclick="submitme();" type="button" value="<?php echo  JText::_('SUBMIT') ;?>"/></div>
 		</form>
    </div>
 
