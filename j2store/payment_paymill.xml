@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="j2store" method="upgrade">
+	<name>Paymill</name>
+	<version>1.0</version>
+	<creationDate>Augest 2013</creationDate>
+	<author>techjoomla.com</author>
+	<authorEmail>support@techjoomla.com</authorEmail>
+	<authorUrl>http://techjoomla.com</authorUrl>
+	<copyright>2012-2013 techjoomla</copyright>
+	<license>GNU General Public License v2 or later</license>
+	<description>PAYMILL_PAYMENT_DESC</description>
+	<files>
+		<filename plugin="payment_paymill">payment_paymill.php</filename>
+		<folder>payment_paymill</folder>  	
+	</files>
+	 <languages>
+		 <language tag="en-GB">en-GB.plg_j2store_payment_paymill.sys.ini</language>
+        <language tag="en-GB">en-GB.plg_j2store_payment_paymill.ini</language>
+    </languages>
+	<config>
+	<fields name="params">
+		<fieldset name="basic">
+				<field name="public_key" type="text" size="30" default="" label="PUBLIC_KEY" description="PUBLIC_KEY_DES"/>
+				<field name="private_key" type="text" size="30" default="" label="PRIVATE_KEY" description="PRIVATE_KEY_DESC"/>
+				<field name="payment_mode" type="radio" default="0" label="PAYMENT_MODE" description="PAYMENT_MODE_DESC">
+				  <option value="0">TEST</option>
+				  <option value="1">LIVE</option>
+				</field>
+		</fieldset>
+	</fields>
+</config>				
+</extension>

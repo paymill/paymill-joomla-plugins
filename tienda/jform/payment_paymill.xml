@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+ <fields name="params">
+			<fieldset name="basic" label="basic">
+				<field name="login_id" type="text" size="50" default="" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_LOGIN_ID" description="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_LOGIN_ID_DESC"/>
+				<field name="tran_key" type="textarea" default="" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_TRANSACTION_KEY" description="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_TRANSACTION_KEY_DESC" rows="5" cols="30" />
+				<field name="md5_hash" type="text" size="50" default="" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_MD5_HASH" description="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_MD5_HASH_DESC" />
+				<field name="secure_post" type="radio" default="0" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_SECURE_POST" description="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_SECURE_POST_DESC">
+					<option value="0">COM_TIENDA_NO</option>
+					<option value="1">COM_TIENDA_YES</option>
+				</field>
+				<field type="spacer" />
+				<field name="sandbox" type="radio" default="0" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_USE_SANDBOX" description="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_USE_SANDBOX_DESC">
+					<option value="0">COM_TIENDA_NO</option>
+					<option value="1">COM_TIENDA_YES</option>
+				</field>
+				<field name="sandbox_login_id" type="text" size="50" default="" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_SANDBOX_LOGIN_ID" description="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_SANDBOX_LOGIN_ID_DESC"/>
+				<field name="sandbox_tran_key" type="textarea" default="" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_SANDBOX_TRANSACTION_KEY" description="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_SANDBOX_TRANSACTION_KEY_DESC" rows="5" cols="30" />
+				<field name="sandbox_md5_hash" type="text" size="50" default="" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_SANDBOX_MD5_HASH" description="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_TIENDA_AUTHORIZEDOTNET_SANDBOX_MD5_HASH_DESC" />
+				<field name="failed_order_state" type="tiendaorderstate" scope="com_tienda" default="10" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_FAILED_ORDER_STATE" description="SPLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_FAILED_ORDER_STATE_DESC" addfieldpath="/administrator/components/com_tienda/elements" />
+				<field name="payment_received_order_state" type="tiendaorderstate" scope="com_tienda" default="17" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_PAYMENT_RECEIVED_ORDER_STATE" description="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_PAYMENT_RECEIVED_ORDER_STATE_DESC" addfieldpath="/administrator/components/com_tienda/elements" />
+                <field name="label" type="textarea" cols="50" rows="10" default="" label="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_LABEL" description="PLG_TIENDA_PAYMENT_AUTHORIZEDOTNET_LABEL_DESC" filter="raw" />
+			</fieldset>
+		</fields>
+</form>
