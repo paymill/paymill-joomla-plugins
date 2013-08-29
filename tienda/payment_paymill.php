@@ -1,13 +1,4 @@
 <?php
-/**
- * @version	1.5
- * @package	Tienda
- * @author 	Dioscouri Design
- * @link 	http://www.dioscouri.com
- * @copyright Copyright (C) 2007 Dioscouri Design. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
-*/
-
 /** ensure this file is being included by a parent file */
 defined('_JEXEC') or die('Restricted access');
 
@@ -275,7 +266,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
 		//echo "<script>alert('asdasd');</script>";
         $vars = new JObject();
         $vars->prepop = array();
-        $vars->cctype_input   = $this->_cardTypesField();
+        
         
         $html = $this->_getLayout('form', $vars);
         
@@ -336,103 +327,6 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
         }   
             
         //return $object;
-    }
-	
-    /************************************
-     * Note to 3pd: 
-     * 
-     * The methods between here
-     * and the next comment block are 
-     * specific to this payment plugin
-     * 
-     ************************************/
-    
-    /**
-     * Generates a dropdown list of valid CC types
-     * @param $fieldname
-     * @param $default
-     * @param $options
-     * @return unknown_type
-     */
-    function _cardTypesField( $field='cardtype', $default='', $options='' )
-    {       
-        $types = array();
-        $types[] = JHTML::_('select.option', 'Visa', JText::_('COM_TIENDA_VISA') );
-        $types[] = JHTML::_('select.option', 'Mastercard', JText::_('COM_TIENDA_MASTERCARD') );
-        $types[] = JHTML::_('select.option', 'AmericanExpress', JText::_('COM_TIENDA_AMERICANEXPRESS') );
-        $types[] = JHTML::_('select.option', 'Discover', JText::_('COM_TIENDA_DISCOVER') );
-        $types[] = JHTML::_('select.option', 'DinersClub', JText::_('COM_TIENDA_DINERSCLUB') );
-        $types[] = JHTML::_('select.option', 'JCB', JText::_('COM_TIENDA_JCB') );
-        
-        $return = JHTML::_('select.genericlist', $types, $field, $options, 'value','text', $default);
-        return $return;
-    }
-    
-    /**
-     * Formats the value of the card expiration date
-     * 
-     * @param string $format
-     * @param $value
-     * @return string|boolean date string or false
-     * @access protected
-     */
-    function _getFormattedCardExprDate($format, $value)
-    {
-        // we assume we received a $value in the format MMYY
-        $month = substr($value, 0, 2);
-        $year = substr($value, 2);
-        
-        if (strlen($value) != 4 || empty($month) || empty($year) || strlen($year) != 2) {
-            return false;
-        }
-        
-        $date = date($format, mktime(0, 0, 0, $month, 1, $year));
-        return $date;
-    }
-
-    /**
-     * Gets the gateway URL
-     * 
-     * @param string $type Simple or subscription
-     * @return string
-     * @access protected
-     */
-    function _getActionUrl($type = 'simple')
-    {
-        if ($type == 'simple') 
-        {
-            $url  = $this->params->get('sandbox') ? 'https://test.authorize.net/gateway/transact.dll' : 'https://secure.authorize.net/gateway/transact.dll';
-        }
-            else 
-        {
-            // recurring billing url
-            $url = $this->params->get('sandbox') ? 'https://apitest.authorize.net/xml/v1/request.api' : 'https://api.authorize.net/xml/v1/request.api';         
-        }
-        
-        return $url;
-    }
-    
-    /**
-     * Gets a value of the plugin parameter
-     * 
-     * @param string $name
-     * @param string $default
-     * @return string
-     * @access protected
-     */
-    function _getParam($name, $default = '') 
-    {
-        $sandbox_param = "sandbox_$name";
-        $sb_value = $this->params->get($sandbox_param);
-        
-        if ($this->params->get('sandbox') && !empty($sb_value)) {
-            $param = $this->params->get($sandbox_param, $default);
-        }
-        else {
-            $param = $this->params->get($name, $default);
-        }
-        
-        return $param;
     }
     
     /**
@@ -767,21 +661,5 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
         // ===================
         // end custom code
         // ===================
-    }
-
-    /**
-     * Shows the CVV popup
-     * @return unknown_type
-     */
-    public function showCVV($row)
-    {
-        if (!$this->_isMe($row))
-        {
-            return null;
-        }
-        
-        $vars = new JObject();
-        echo $this->_getLayout('showcvv', $vars);
-        return;
     }
 }

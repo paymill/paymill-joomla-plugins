@@ -1,17 +1,4 @@
 <?php
-/*
- * --------------------------------------------------------------------------------
-   Weblogicx India  - J2 Store v 3.0 - Payment Plugin - SagePay
- * --------------------------------------------------------------------------------
- * @package		Joomla! 2.5x
- * @subpackage	J2 Store
- * @author    	Weblogicx India http://www.weblogicxindia.com
- * @copyright	Copyright (c) 2010 - 2015 Weblogicx India Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
- * @link		http://weblogicxindia.com
- * --------------------------------------------------------------------------------
-*/
-
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
@@ -19,7 +6,6 @@ require_once (JPATH_ADMINISTRATOR.'/components/com_j2store/library/plugins/payme
 require_once (JPATH_SITE.'/components/com_j2store/helpers/utilities.php');
 jimport('joomla.application.component.helper');
 class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
-
 {/**
 	 * @var $_element  string  Should always correspond with the plugin's filename, 
 	 *                         forcing it to be unique 
@@ -37,12 +23,6 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
 		parent::__construct($subject, $config);
 		$this->loadLanguage( '', JPATH_ADMINISTRATOR );
 		$params = JComponentHelper::getParams('com_j2store');
-		
-		/*$app = &JFactory::getApplication();
-		$params = JComponentHelper::getParams('com_j2store');
-		
-		$dashboardId = $params->get('dashboardId');
-		var_dump($dashboardId);*/
 		$this->code_arr = array (
 		'internal_server_error'       => JText::_('INTERNAL_SERVER_ERROR'),
 		'invalid_public_key'    	  => JText::_('INVALID_PUBLIC_KEY'),
@@ -60,7 +40,6 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
 		'field_invalid_account_number'=> JText::_('FIELD_INVALID_AMOUNT_NUMBER'),
 		'field_invalid_account_holder'=> JText::_('FIELD_INVALID_ACCOUNT_HOLDER'),
 		'field_invalid_bank_code'     => JText::_('FIELD_INVALID_BANK_CODE'),
-	
 		);
         $this->public_key = $this->_getParam( 'public_key' ); 
         $this->private_key = $this->_getParam( 'private_key' );
@@ -157,13 +136,9 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
      */
     function _renderForm( $data )
     {
-		//echo "hi";die();
         $vars = new JObject();
         $vars->prepop = array();
-        //$vars->cctype_input   = $this->_cardTypesField();
-        //print_r($vars);
         $html = $this->_getLayout('form', $vars);
-       // echo $html;die('ccc');
         return $html;
     }
     
@@ -235,74 +210,6 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
             
        //return $object;
     }
-
-    /**
-     * Formats the value of the card expiration date
-     * 
-     * @param string $format
-     * @param $value
-     * @return string|boolean date string or false
-     * @access protected
-     */
-    function _getFormattedCardExprDate($format, $value)
-    {
-        // we assume we received a $value in the format MMYY
-        $month = substr($value, 0, 2);
-        $year = substr($value, 2);
-        
-        if (strlen($value) != 4 || empty($month) || empty($year) || strlen($year) != 2) {
-            return false;
-        }
-        
-        $date = date($format, mktime(0, 0, 0, $month, 1, $year));
-        return $date;
-    }
-
-    /**
-     * Gets the gateway URL
-     * 
-     * @param string $type Simple or subscription
-     * @return string
-     * @access protected
-     */
-    function _getActionUrl($type = 'simple')
-    {
-        if ($type == 'simple') 
-        {
-            $url  = $this->params->get('sandbox') ? 'https://test.sagepay.com/simulator/VSPDirectGateway.asp' : 'https://live.sagepay.com/gateway/service/vspdirect-register.vsp';
-        }
-            else 
-        {
-            // recurring billing url
-            $url  = $this->params->get('sandbox') ? 'https://test.sagepay.com/simulator/VSPDirectGateway.asp' : 'https://live.sagepay.com/gateway/service/vspdirect-register.vsp';
-        }
-        
-        return $url;
-    }
-    
-    /**
-     * Gets a value of the plugin parameter
-     * 
-     * @param string $name
-     * @param string $default
-     * @return string
-     * @access protected
-     */
-    function _getParam($name, $default = '') 
-    {
-        $sandbox_param = "sandbox_$name";
-        $sb_value = $this->params->get($sandbox_param);
-        
-        if ($this->params->get('sandbox') && !empty($sb_value)) {
-            $param = $this->params->get($sandbox_param, $default);
-        }
-        else {
-            $param = $this->params->get($name, $default);
-        }
-        
-        return $param;
-    }
-    
     
     /**
      * Processes the payment
@@ -567,51 +474,4 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
         return count($formatted) ? implode("\n", $formatted) : '';  
     }
     
-   
-    
-    /**
-     * Gets admins data
-     *
-     * @return array|boolean
-     * @access protected
-     */
-    function _getAdmins()
-    {
-    	$db =JFactory::getDBO();
-    	$query = $db->getQuery(true);
-    	$query->select('u.name,u.email');
-    	$query->from('#__users AS u');
-    	$query->join('LEFT', '#__user_usergroup_map AS ug ON u.id=ug.user_id');
-    	$query->where('u.sendEmail = 1');
-    	$query->where('ug.group_id = 8');
-    
-    	$db->setQuery($query);
-    	$admins = $db->loadObjectList();
-    	if ($error = $db->getErrorMsg()) {
-    		JError::raiseError(500, $error);
-    		return false;
-    	}
-    
-    	return $admins;
-    }
-    
-    function _getOrderPaymentId($order_id) {
-		
-		$db = JFactory::getDBO();
-		$query = 'SELECT id FROM #__j2store_orders WHERE order_id='.$order_id;
-		$db->setQuery($query);
-		$result = $db->loadResult();
-		//print_r($result);die();
-		//return $db->loadResult();
-		
-		
-	}
-	
-	function _getOrderInfo($orderpayment_id) {
-	
-		$db = JFactory::getDBO();
-		$query = 'SELECT * FROM #__j2store_orderinfo WHERE orderpayment_id='.$db->Quote($orderpayment_id);
-		$db->setQuery($query);
-		return $db->loadObject();
-	}
 }
