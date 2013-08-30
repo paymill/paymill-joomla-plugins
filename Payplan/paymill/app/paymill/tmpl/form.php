@@ -1,7 +1,7 @@
 <?php
 if(defined('_JEXEC')===false) die();
 $url = JURI::base().'plugins/payplans/paymill/paymill/app/paymill/tmpl/ajax_loader.gif';
-		if(JVERSION <= '2.5.9')
+		if(JVERSION <= '3.0')
 		{
 			echo '<link href="plugins/redshop_payment/payplans/payplans/paymill.css" rel="stylesheet">';
 		}
@@ -95,7 +95,7 @@ $url = JURI::base().'plugins/payplans/paymill/paymill/app/paymill/tmpl/ajax_load
 					//console.log(index);
 					if(index == error.apierror){
 						var version ='<?php echo JVERSION;?>'
-						if(version > "2.5.9")
+						if(version > "3.0")
 						{
 							jQuery(".payment-errors").addClass("alert alert-error");
 						}

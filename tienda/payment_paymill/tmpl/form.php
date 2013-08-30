@@ -7,7 +7,6 @@ Tienda::load( 'TiendaHelperCurrency', 'helpers.currency' );
 Tienda::load( 'TiendaHelperBase', 'helpers._base' );
 $items = TiendaHelperCarts::getProductsInfo();
 $orderTable = JTable::getInstance('Orders', 'TiendaTable');
-//print_r($orderTable);
 foreach($items as $item)
 {
     $orderTable->addItem($item);
@@ -20,10 +19,7 @@ $currency = TiendaHelperCurrency::load($currency);
 $currency_code = $currency->currency_code;
 $jsonarr= json_encode($this->code_arr);
 $urlme = JURI::ROOT().'plugins/tienda/payment_paymill/payment_paymill/images/ajax_loader.gif';
-if(JVERSION <= '2.5.9')
-{
-		//echo '<link href="'.JURI::ROOT().'plugins/tienda/payment_paymill/payment_paymill/css/paymill.css" rel="stylesheet">';
-}
+
 ?>		
 <style>
 #opc-payment-button

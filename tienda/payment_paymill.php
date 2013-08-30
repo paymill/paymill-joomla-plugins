@@ -128,7 +128,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
 					if(index == error.apierror){
 						var version = "'.JVERSION.'";
 						//alert(version);
-						if(version >= "2.5.9")
+						if(version >= "3.0")
 						{
 							jQuery(".payment-errors").addClass("alert alert-error");
 						}

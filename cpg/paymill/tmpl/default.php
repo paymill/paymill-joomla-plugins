@@ -1,6 +1,6 @@
 <?php 
 $jsonarr= json_encode($this->code_arr);
-if(JVERSION <= '2.5.9')
+if(JVERSION <= '3.0')
 		{
 				echo '<link href="plugins/payment/paymill/paymill/tmpl/paymill.css" rel="stylesheet">';
 				$urlme = JURI::base().'plugins/payment/paymill/paymill/tmpl/ajax_loader.gif';
@@ -103,7 +103,7 @@ var PAYMILL_TEST_MODE  = <?php echo $t;?>;
 					if(index == error.apierror){
 						//console.log(element);
 						var version = '<?php echo JVERSION;?>';
-						if(version > '2.5.9')
+						if(version > '3.0')
 						{
 							jQuery(".payment-errors").addClass('alert alert-error');
 						}

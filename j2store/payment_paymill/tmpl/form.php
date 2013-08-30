@@ -1,7 +1,7 @@
 <?php defined('_JEXEC') or die(); 
 $jsonarr= json_encode($this->code_arr);
 $url = JURI::ROOT().'plugins/j2store/payment_paymill/payment_paymill/images/ajax_loader.gif';
-if(JVERSION <= '2.5.9')
+if(JVERSION <= '3.0')
 {
 	echo '<link href="plugins/rj2store/payment_paymill/payment_paymill/css/paymill.css" rel="stylesheet">';
 }
@@ -107,7 +107,7 @@ $currency_code = $j2store_params->get('currency_code');
 					if(index == error.apierror){
 						var version = '<?php echo JVERSION;?>';
 						//alert(version);
-						if(version >= "2.5.9")
+						if(version >= "3.0")
 						{
 							jQuery(".payment-errors").addClass('alert alert-error');
 						}

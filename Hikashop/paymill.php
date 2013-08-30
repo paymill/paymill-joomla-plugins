@@ -130,7 +130,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		//from html layout	
 		
 		$url = JURI::base().'plugins/hikashoppayment/paymill/img/ajax_loader.gif';
-		if(JVERSION <= '2.5.9')
+		if(JVERSION <= '3.0')
 		{
 				$method->custom_html .='<link href="'.JURI::base().'plugins/hikashoppayment/paymill/css/paymill.css" rel="stylesheet">';
 		}
@@ -246,7 +246,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 				jQuery.each(jason_error, function(index, element) {
 					if(index == error.apierror){
 						var version = "'.JVERSION.'";
-						if(version > "2.5.9")
+						if(version > "2.5.0")
 						{
 							jQuery(".payment-errors").addClass("alert alert-error");
 						}

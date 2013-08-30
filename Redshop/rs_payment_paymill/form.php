@@ -15,7 +15,7 @@ else
 $order->order_subtotal = $order_details->order_total;
 $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=order_detail&controller=order_detail&task=notify_payment&payment_plugin=rs_payment_paymill&Itemid=$Itemid&orderid=" .$data['order_id'];		
 $url = JURI::ROOT().'plugins/redshop_payment/rs_payment_paymill/rs_payment_paymill/ajax_loader.gif';
-if(JVERSION <= '2.5.9')
+if(JVERSION <= '3.0')
 {
 	echo '<link href="plugins/redshop_payment/rs_payment_paymill/rs_payment_paymill/paymill.css" rel="stylesheet">';
 }
@@ -109,7 +109,7 @@ if(JVERSION <= '2.5.9')
 				jQuery.each(slab[0], function(index, element) {
 					if(index == error.apierror){
 						var version = '<?php echo JVERSION;?>';
-						if(version <= "2.5.9")
+						if(version <= "3.0")
 						{
 							jQuery(".payment-errors").addClass('alert alert-error');
 						}
