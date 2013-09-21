@@ -12,11 +12,11 @@ $lang->load('plg_hikashoppayment_paymill', JPATH_ADMINISTRATOR);
 
 class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 {
-	var $debugData = array();
-	var $multiple = true;
-	var $name = 'paymill';
+	private $debugData = array();
+	private $multiple = true;
+	private $name = 'paymill';
 
-	var $pluginConfig = array(
+	private $pluginConfig = array(
 		'public_key' => array('PUBLIC_KEY', 'input'),
 		'private_key' => array('PRIVATE_KEY', 'input'),
 		'payment_mode' => array('ENABLE_PAYMENT_MODE', 'list',array(
@@ -24,7 +24,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 			'false' => 'Live')
 		)
 	);
-	function __construct(& $subject, $config)
+	private function __construct(& $subject, $config)
 	{
 		parent::__construct($subject, $config);
 		//Set the language in the class
@@ -53,7 +53,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		
 	}
 	//set currency and amount 
-	function onAfterCartProductsLoad(&$cart)
+	Public function onAfterCartProductsLoad(&$cart)
 	{ 
 		$this->amount1 = $cart->full_total->prices[0]->price_value_with_tax;
 		$currency1 = $cart->full_total->prices[0]->price_currency_id;
@@ -64,7 +64,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		$this->currency1= $result->currency_code;
 	}
 	
-	function needCC(&$method) 
+	Public function needCC(&$method) 
 	{
 		//print_r(JRequest::get('POST'));
 		if(JRequest::get('POST'))
@@ -355,7 +355,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 			return true;
 	}
 
-	function onBeforeOrderCreate(&$order,&$do)
+	public function onBeforeOrderCreate(&$order,&$do)
 	{
 		if(parent::onBeforeOrderCreate($order, $do) === true)
 		return true;
@@ -430,7 +430,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 	
 	}
 
-	function onAfterOrderConfirm(&$order,&$methods,$method_id){
+	public function onAfterOrderConfirm(&$order,&$methods,$method_id){
 		
 		$this->paymill_order_id = $order->order_id;
 		$this->removeCart = true;
@@ -439,7 +439,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		return $this->showPage('thanks');
 	}
 
-	function getPaymentDefaultValues(&$element) {
+	private function getPaymentDefaultValues(&$element) {
 		$element->payment_name='Paymill';
 		$element->payment_description='You can pay by Credit card/ Direct debit using this payment method';
 		$element->payment_images='';
