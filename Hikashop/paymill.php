@@ -7,7 +7,7 @@
  * @license	GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 defined('_JEXEC') or die('Restricted access');
-$lang = & JFactory::getLanguage();
+$lang = JFactory::getLanguage();
 $lang->load('plg_hikashoppayment_paymill', JPATH_ADMINISTRATOR);
 
 class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
@@ -434,7 +434,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		
 		$this->paymill_order_id = $order->order_id;
 		$this->removeCart = true;
-		$method =& $methods[$method_id];
+		$method = $methods[$method_id];
 		$this->return_url = @$method->payment_params->return_url;
 		return $this->showPage('thanks');
 	}

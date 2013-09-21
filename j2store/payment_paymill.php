@@ -13,12 +13,12 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
 	 
 		
 		//print_r($params);die();
-    var $_element    = 'payment_paymill';
-    var $login_id    = '';
-    var $tran_key    = '';
-    var $_isLog      = false;
+    private $_element    = 'payment_paymill';
+    private $login_id    = '';
+    private $tran_key    = '';
+    private $_isLog      = false;
     
-    function plgJ2StorePayment_paymill(& $subject, $config) 
+    function __construct(& $subject, $config) 
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage( '', JPATH_ADMINISTRATOR );

@@ -12,7 +12,7 @@ else
 {
 	$currency_main = "EUR";
 }
-$order->order_subtotal = $order_details->order_total;
+//$order->order_subtotal = $order_details->order_total;
 $returnUrl = JURI::base() . "index.php?tmpl=component&option=com_redshop&view=order_detail&controller=order_detail&task=notify_payment&payment_plugin=rs_payment_paymill&Itemid=$Itemid&orderid=" .$data['order_id'];		
 $url = JURI::ROOT().'plugins/redshop_payment/rs_payment_paymill/rs_payment_paymill/ajax_loader.gif';
 if(JVERSION <= '3.0')
@@ -154,7 +154,7 @@ if(JVERSION <= '3.0')
 						<div id="field">
 						<div class="control-group">
 								<label class="control-label"><?php echo JText::_('NAME') ;?></label>
-								<div class="controls"><input class="card-holdername"  type="text" size="20" value="<?php echo $vars->user_firstname;?>" />
+								<div class="controls"><input class="card-holdername"  type="text" size="20" value="<?php// echo $vars->user_firstname;?>" />
 								</div>
                         </div>
                         <div class="control-group">

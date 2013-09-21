@@ -34,6 +34,6 @@ $currency = $result->currency_code;
 </div>
 <?php
 if(!empty($this->return_url)){
-	$doc =& JFactory::getDocument();
+	$doc = JFactory::getDocument();
 	$doc->addScriptDeclaration("window.addEvent('domready', function() {window.location='".$this->return_url."'});");
 }

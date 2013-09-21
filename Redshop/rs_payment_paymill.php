@@ -10,14 +10,14 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
-$lang = & JFactory::getLanguage();
+$lang = JFactory::getLanguage();
 $lang->load('plg_redshop_payment_paymill', JPATH_ADMINISTRATOR);
 
 class plgRedshop_paymentrs_payment_paymill extends JPlugin
 {
 	public $_table_prefix = null;
 
-	public function plgRedshop_paymentrs_payment_paymill(&$subject)
+	function __construct(&$subject)
 	{
 		// Load plugin parameters
 		parent::__construct($subject);

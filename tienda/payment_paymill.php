@@ -3,7 +3,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 Tienda::load( 'TiendaPaymentPlugin', 'library.plugins.payment' );
-$lang = & JFactory::getLanguage();
+$lang = JFactory::getLanguage();
 $lang->load('plg_tienda_payment_paymill', JPATH_ADMINISTRATOR);
 
 class plgTiendaPayment_paymill extends TiendaPaymentPlugin
@@ -12,10 +12,10 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
 	 * @var $_element  string  Should always correspond with the plugin's filename, 
 	 *                         forcing it to be unique 
 	 */
-    var $_element    = 'payment_paymill';
-    var $public_key    = '';
-    var $private_key    = '';
-    var $_isLog      = false;
+    private $_element    = 'payment_paymill';
+    private $public_key    = '';
+    private $private_key    = '';
+    private $_isLog      = false;
     
     /**
      * 
@@ -23,7 +23,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @param $config
      * @return unknown_type
      */
-	function plgTiendaPayment_paymill(& $subject, $config) 
+	function __construct(& $subject, $config) 
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage( '', JPATH_ADMINISTRATOR );
@@ -49,7 +49,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
         $this->public_key = $this->_getParam( 'public_key' ); 
         $this->private_key = $this->_getParam( 'private_key' );
         $this->sandbox = $this->_getParam( 'sandbox' );
-        $document =& JFactory::getDocument();
+        $document = JFactory::getDocument();
         if($this->sandbox == '0')
 		{
 		  $t = 'true';	
