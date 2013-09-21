@@ -23,7 +23,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @param $config
      * @return unknown_type
      */
-	function __construct(& $subject, $config) 
+	private function __construct(& $subject, $config) 
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage( '', JPATH_ADMINISTRATOR );
@@ -184,33 +184,34 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @param $data     array       form post data
      * @return string   HTML to display
      */
-    function _prePayment( $data )
+    public function _prePayment( $data )
     {
+		$jinput = JFactory::getApplication()->input;
         // prepare the payment form
         $vars->order_id = $data['order_id'];
         $vars->orderpayment_id = $data['orderpayment_id'];
 		$vars->orderpayment_amount = $data['orderpayment_amount'];
         $vars->orderpayment_type = $this->_element;
         
-        $vars->cardholder = JRequest::getVar("cardholder");
-        $vars->payment_mode = JRequest::getVar("payment_mode");
+        $vars->cardholder =  $jinput->get("cardholder");
+        $vars->payment_mode =  $jinput->get("payment_mode");
          //crdit card
-        $vars->cardnum = JRequest::getVar("cardnum");
-        $month=JRequest::getVar("month");
-        $year=JRequest::getVar("year");
+        $vars->cardnum =  $jinput->get("cardnum");
+        $month= $jinput->get("month");
+        $year= $jinput->get("year");
         $card_exp = $month.' / '.$year;
         $vars->cardexp = $card_exp;
         
-        $vars->cardcvv = JRequest::getVar("cardcvv");
-        $vars->cardnum_last4 = substr( JRequest::getVar("cardnum"), -4 );
+        $vars->cardcvv =  $jinput->get("cardcvv");
+        $vars->cardnum_last4 = substr(  $jinput->get("cardnum"), -4 );
         //debit card
-        $vars->accnum =JRequest::getVar("accnum");
-        $vars->accnum_last4 = substr( JRequest::getVar("accnum"), -4 );
-        $vars->banknum =JRequest::getVar("banknum");
-        $vars->country =JRequest::getVar("country");
+        $vars->accnum = $jinput->get("accnum");
+        $vars->accnum_last4 = substr(  $jinput->get("accnum"), -4 );
+        $vars->banknum = $jinput->get("banknum");
+        $vars->country = $jinput->get("country");
         
         //token 
-        $vars->token12 =JRequest::getVar("token12");
+        $vars->token12 = $jinput->get("token12");
         //lets check the values submitted
       //  print_r($vars);die();
         $html = $this->_getLayout('prepayment', $vars);
@@ -226,14 +227,14 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @param $data     array       form post data
      * @return string   HTML to display
      */
-    function _postPayment( $data )
+    public function _postPayment( $data )
     {
 		//print_r($data);die();
         // Process the payment        
         $vars = new JObject();
-        
+        $jinput = JFactory::getApplication()->input;
         $app = JFactory::getApplication();
-        $paction = JRequest::getVar( 'paction' );
+        $paction = $jinput->get( 'paction' );
         
         switch ($paction)
         {
@@ -261,7 +262,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * 
      * @return unknown_type
      */
-    function _renderForm( $data )
+    public function _renderForm( $data )
     {
 		//echo "<script>alert('asdasd');</script>";
         $vars = new JObject();
@@ -282,7 +283,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @param $submitted_values     array   post data
      * @return unknown_type
      */
-    function _verifyForm( $submitted_values )
+    public function _verifyForm( $submitted_values )
     {
         $object = new JObject();
         $object->error = false;
@@ -337,7 +338,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @return JUser object
      * @access protected
      */
-    function _getUser( $submitted_values, $user_id = 0 )
+    public function _getUser( $submitted_values, $user_id = 0 )
     {
         $config = Tienda::getInstance();
         
@@ -386,7 +387,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @return string
      * @access protected
      */
-    function _process()
+    public function _process()
     {
         /*
          * perform initial checks 
@@ -418,7 +419,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @return array
      * @access protected
      */
-    function _getProcessVars($data)
+    private function _getProcessVars($data)
     {
        JModel::addIncludePath( JPATH_ADMINISTRATOR.'/components/com_tienda/models' );		
 		JTable::addIncludePath( JPATH_ADMINISTRATOR.'/components/com_tienda/tables' );
@@ -454,7 +455,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @param string $type
      * @return void
      */
-    function _log($text, $type = 'message')
+     public function _log($text, $type = 'message')
     {
         if ($this->_isLog) {
             $file = JPATH_ROOT . "/cache/{$this->_element}.log";
@@ -476,7 +477,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @return string
      * @access protected
      */
-    function _processSimplePayment($authnet_values) 
+    private function _processSimplePayment($authnet_values) 
     {
         require "plugins/tienda/payment_paymill/payment_paymill/lib/Services/Paymill/Transactions.php";
         define('PAYMILL_API_HOST', 'https://api.paymill.com/v2/');
@@ -499,7 +500,7 @@ class plgTiendaPayment_paymill extends TiendaPaymentPlugin
      * @return object Message object
      * @access protected
      */
-    function _evaluateSimplePaymentResponse( $resp, $submitted_values )
+    private function _evaluateSimplePaymentResponse( $resp, $submitted_values )
     {
         $send_email = false;
         $object = new JObject();

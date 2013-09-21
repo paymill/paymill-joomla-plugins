@@ -66,23 +66,24 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 	
 	Public function needCC(&$method) 
 	{
+		$jinput = JFactory::getApplication()->input;
 		//print_r(JRequest::get('POST'));
-		if(JRequest::get('POST'))
+		if( $jinput->get('POST'))
 		{
-			$nm =  JRequest::getInt('paymill-card-nm');
-			$no = JRequest::getInt('paymill-card-no');
+			$nm =   $jinput->get('paymill-card-nm');
+			$no =  $jinput->get('paymill-card-no');
 			
 			$xreplace = substr($no,0,12);
 			$replace_no= str_replace($xreplace,"xxxxxxxxxxxx",$no);
 			
-			$ex_mm = JRequest::getInt('paymill-card-ex-mm');
-			$ex_yy = JRequest::getInt('paymill-card-ex-yy');
-			$ex_cvc = JRequest::getInt('paymill-card-ex-cvc');
-			$token = JRequest::getInt('token');
-			$ac_no = JRequest::getVar('paymill-card-acc-no');
-			$bank_no = JRequest::getVar('paymill-card-bank-no');
-			$acc_country =JRequest::getVar('paymill-card-acc-country');
-			$PAYMENT_TYPE= JRequest::getVar('PAYMENT_TYPE');
+			$ex_mm =  $jinput->get('paymill-card-ex-mm');
+			$ex_yy =  $jinput->get('paymill-card-ex-yy');
+			$ex_cvc =  $jinput->get('paymill-card-ex-cvc');
+			$token =  $jinput->get('token');
+			$ac_no =  $jinput->get('paymill-card-acc-no');
+			$bank_no =  $jinput->get('paymill-card-bank-no');
+			$acc_country = $jinput->get('paymill-card-acc-country');
+			$PAYMENT_TYPE= $jinput->get('PAYMENT_TYPE');
 		}
 		/*if(!isset(JRequest::getVar('PAYMENT_TYPE')))
 		{
@@ -360,7 +361,8 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		if(parent::onBeforeOrderCreate($order, $do) === true)
 		return true;
 		$this->ccLoad();
-		$token =JRequest::getVar('token');
+		$jinput = JFactory::getApplication()->input;
+		$token = $jinput->get('token');
 		
 		define('PAYMILL_API_HOST', 'https://api.paymill.com/v2/');
 		//FROM PAYMILL PLUGIN BACKEND 

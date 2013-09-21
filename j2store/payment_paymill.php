@@ -18,7 +18,7 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
     private $tran_key    = '';
     private $_isLog      = false;
     
-    function __construct(& $subject, $config) 
+    private function __construct(& $subject, $config) 
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage( '', JPATH_ADMINISTRATOR );
@@ -50,9 +50,9 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
      * @param $data     array       form post data
      * @return string   HTML to display
      */
-    function _prePayment( $data )
+   public function _prePayment( $data )
     {
-		
+		$jinput = JFactory::getApplication()->input;
         // prepare the payment form
         $vars = new JObject();
         
@@ -65,25 +65,25 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
         $vars->orderpayment_id = $data['orderpayment_id'];
         $vars->orderpayment_type = $this->_element;
         
-        $vars->cardholder = JRequest::getVar("cardholder");
-        $vars->payment_mode = JRequest::getVar("payment_mode");
+        $vars->cardholder =  $jinput->get("cardholder",'','filter');
+        $vars->payment_mode = $jinput->get("payment_mode",'','filter');
          //crdit card
-        $vars->cardnum = JRequest::getVar("cardnum");
-        $month=JRequest::getVar("month");
-        $year=JRequest::getVar("year");
+        $vars->cardnum = $jinput->get("cardnum");
+        $month=$jinput->get("month");
+        $year=$jinput->get("year");
         $card_exp = $month.' / '.$year;
         $vars->cardexp = $card_exp;
         
-        $vars->cardcvv = JRequest::getVar("cardcvv");
-        $vars->cardnum_last4 = substr( JRequest::getVar("cardnum"), -4 );
+        $vars->cardcvv = $jinput->get("cardcvv");
+        $vars->cardnum_last4 = substr( $jinput->get("cardnum"), -4 );
         //debit card
-        $vars->accnum =JRequest::getVar("accnum");
-        $vars->accnum_last4 = substr( JRequest::getVar("accnum"), -4 );
-        $vars->banknum =JRequest::getVar("banknum");
-        $vars->country =JRequest::getVar("country");
+        $vars->accnum =$jinput->get("accnum");
+        $vars->accnum_last4 = substr( $jinput->get("accnum"), -4 );
+        $vars->banknum =$jinput->get("banknum");
+        $vars->country =$jinput->get("country");
         
         //token 
-        $vars->token12 =JRequest::getVar("token12");
+        $vars->token12 $jinput->get("token12");
         //lets check the values submitted
       //  print_r($vars);die();
         $html = $this->_getLayout('prepayment', $vars);
@@ -98,14 +98,15 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
      * @param $data     array       form post data
      * @return string   HTML to display
      */
-    function _postPayment( $data )
+   public function _postPayment( $data )
     {
 		//print_r($data);die();
-        // Process the payment        
+        // Process the payment
+        $jinput = JFactory::getApplication()->input;        
         $vars = new JObject();
         
         $app =JFactory::getApplication();
-        $paction = JRequest::getVar( 'paction' );
+        $paction = $jinput->get( 'paction' );
         
         switch ($paction)
         {
@@ -134,7 +135,7 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
      * 
      * @return unknown_type
      */
-    function _renderForm( $data )
+   public function _renderForm( $data )
     {
         $vars = new JObject();
         $vars->prepop = array();
@@ -151,7 +152,7 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
      * @param $submitted_values     array   post data
      * @return unknown_type
      */
-    function _verifyForm( $submitted_values )
+   public function _verifyForm( $submitted_values )
     {
         $object = new JObject();
         $object->error = false;
@@ -219,7 +220,7 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
      * @return string
      * @access protected
      */
-    function _process()
+    public function _process()
     {
 
 		//echo "dfsdf";die();
@@ -230,8 +231,8 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
             return $this->_renderHtml( JText::_( 'J2STORE_SAGEPAY_INVALID_TOKEN' ) );
         }
         
-        
-        $data = JRequest::get('post');
+        $jinput = JFactory::getApplication()->input;
+        $data = $jinput->get('post');
         // get order information
         JTable::addIncludePath( JPATH_ADMINISTRATOR.'/components/com_j2store/tables' );
         $order = JTable::getInstance('Orders', 'Table');
@@ -258,7 +259,7 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
      * @return array
      * @access protected
      */
-    function _getProcessVars($data)
+   private function _getProcessVars($data)
     {
 		require_once (JPATH_SITE.'/components/com_j2store/helpers/cart.php');
 		$access = new J2StoreHelperCart();
@@ -290,7 +291,7 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
      * @param string $type
      * @return void
      */
-    function _log($text, $type = 'message')
+    public function _log($text, $type = 'message')
     {
         if ($this->_isLog) {
             $file = JPATH_ROOT . "/cache/{$this->_element}.log";
@@ -312,7 +313,7 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
      * @return string
      * @access protected
      */
-    function _processSimplePayment($params) 
+  private function _processSimplePayment($params) 
     {
 		require "plugins/j2store/payment_paymill/payment_paymill/lib/Services/Paymill/Transactions.php";
         define('PAYMILL_API_HOST', 'https://api.paymill.com/v2/');
@@ -336,7 +337,7 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
      * @return object Message object
      * @access protected
      */
-    function _evaluateSimplePaymentResponse( $resp, $submitted_values )
+    private function _evaluateSimplePaymentResponse( $resp, $submitted_values )
     {
 		//print_r($resp);die();
         $object = new JObject();
@@ -458,7 +459,7 @@ class plgJ2StorePayment_paymill extends J2StorePaymentPlugin
     }
     
     
-     function _getFormattedTransactionDetails( $data )
+    private function _getFormattedTransactionDetails( $data )
     {
         $separator = "\n";
         $formatted = array();

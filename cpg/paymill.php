@@ -50,7 +50,7 @@ class plgpaymentpaymill extends JPlugin
 	private $_payment_gateway = 'payment_paymill';
 	private $_log = null;
 	
-	function __construct(& $subject, $config)
+	private function __construct(& $subject, $config)
 	{
 		parent::__construct($subject, $config);
 		
@@ -90,7 +90,7 @@ class plgpaymentpaymill extends JPlugin
 	}
 	
 	/* Internal use functions */
-	function buildLayoutPath($layout="default") {
+	public function buildLayoutPath($layout="default") {
 		if(empty($layout))
 			$layout="default";
 		$app = JFactory::getApplication();
@@ -107,7 +107,7 @@ class plgpaymentpaymill extends JPlugin
 	}
 	
 	//Builds the layout to be shown, along with hidden fields.
-	function buildLayout($vars, $layout = 'default' )
+	public function buildLayout($vars, $layout = 'default' )
 	{
 		// Load the layout & push variables
 		ob_start();
@@ -118,7 +118,7 @@ class plgpaymentpaymill extends JPlugin
 		return $html;
 	}
 	//gets param values
-    function getParamResult($name, $default = '') 
+    public function getParamResult($name, $default = '') 
     {
 		
     	$sandbox_param = "sandbox_$name";
@@ -135,7 +135,7 @@ class plgpaymentpaymill extends JPlugin
     }
 
 	// Used to Build List of Payment Gateway in the respective Components
-	function onTP_GetInfo($config)
+	public function onTP_GetInfo($config)
 	{
 		if(!in_array($this->_name,$config))
 		return;
@@ -147,7 +147,7 @@ class plgpaymentpaymill extends JPlugin
 	
 	
 	//Constructs the Payment form in case of On Site Payment gateways like Auth.net & constructs the Submit button in case of offsite ones like Paypal
-	function onTP_GetHTML($vars)
+	public function onTP_GetHTML($vars)
 	{
 		$session = JFactory::getSession();
 		$session->set('amount', $vars->amount);
@@ -233,7 +233,7 @@ class plgpaymentpaymill extends JPlugin
 	}
 	
 	//translate response in required format
-	function translateResponse($payment_status)
+	private function translateResponse($payment_status)
 	{
 			foreach($this->responseStatus as $key=>$value)
 			{
@@ -243,7 +243,7 @@ class plgpaymentpaymill extends JPlugin
 	}
 	
 	//store order log in log files
-	function onTP_Storelog($data)
+	private function onTP_Storelog($data)
 	{
 			$log = plgPaymentpaymillHelper::Storelog($this->_name,$data);
 	

@@ -17,7 +17,7 @@ class plgRedshop_paymentrs_payment_paymill extends JPlugin
 {
 	public $_table_prefix = null;
 
-	function __construct(&$subject)
+	private function __construct(&$subject)
 	{
 		// Load plugin parameters
 		parent::__construct($subject);

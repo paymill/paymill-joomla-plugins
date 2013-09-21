@@ -24,21 +24,22 @@ class PayplansAppPaymill extends PayplansAppPayment
 		return false;
 	}	
 	
-	function onPayplansControllerCreation(&$view, &$controller, &$task, &$format)
+	public function onPayplansControllerCreation(&$view, &$controller, &$task, &$format)
 		{
+			$jinput = JFactory::getApplication()->input;
 			if($view != 'payment' || ($task != 'notify') )
 			{
 				return true;
 			}
-			$paymentKey = JRequest::getVar('invoice', null);
+			$paymentKey =  $jinput->get('invoice', null);
 			if(!empty($paymentKey)){
-				JRequest::setVar('payment_key', $paymentKey, 'POST');
+				 $jinput->set('payment_key', $paymentKey, 'POST');
 				return true;
 			}
 			return true;
 		}
 		
-    function onPayplansPaymentForm(PayplansPayment $payment, $data = null)
+    public function onPayplansPaymentForm(PayplansPayment $payment, $data = null)
 	{		
 		$code_arr = array (
 		'internal_server_error'       => JText::_('INTERNAL_SERVER_ERROR'),
@@ -71,7 +72,7 @@ class PayplansAppPaymill extends PayplansAppPayment
 		return $this->_render('form');
 	}
 	
-	function onPayplansPaymentAfter(PayplansPayment $payment, &$action, &$data, $controller)
+	public function onPayplansPaymentAfter(PayplansPayment $payment, &$action, &$data, $controller)
 	{
 		if($action == 'cancel'){
 			return true;
