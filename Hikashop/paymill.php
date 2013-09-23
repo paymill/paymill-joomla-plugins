@@ -53,7 +53,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		
 	}
 	//set currency and amount 
-	Public function onAfterCartProductsLoad(&$cart)
+	public function onAfterCartProductsLoad(&$cart)
 	{ 
 		$this->amount1 = $cart->full_total->prices[0]->price_value_with_tax;
 		$currency1 = $cart->full_total->prices[0]->price_currency_id;
@@ -64,7 +64,7 @@ class plgHikashoppaymentpaymill extends hikashopPaymentPlugin
 		$this->currency1= $result->currency_code;
 	}
 	
-	Public function needCC(&$method) 
+	public function needCC(&$method) 
 	{
 		$jinput = JFactory::getApplication()->input;
 		//print_r(JRequest::get('POST'));
