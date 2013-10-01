@@ -1,17 +1,15 @@
 <?php
-/*
+/**
  * --------------------------------------------------------------------------------
-   Weblogicx India  - J2Store - Payment Plugin - SagePay
+ * Payment Plugin - Paymill
  * --------------------------------------------------------------------------------
- * @package		Joomla! 2.5x
- * @subpackage	J2 Store
- * @author    	Sasi varna kumar - Weblogicx India http://www.weblogicxindia.com
- * @copyright	Copyright (c) 2010 - 2015 Weblogicx India Ltd. All rights reserved.
- * @license		GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
- * @link		http://weblogicxindia.com
+ * @package     Joomla!_2.5x_And_3.0X
+ * @subpackage  J2 Store
+ * @author      Techjoomla <support@techjoomla.com>
+ * @copyright   Copyright (c) 2010 - 2015 Techjoomla . All rights reserved.
+ * @license     GNU/GPL license: http://www.techjoomla.com/copyleft/gpl.html
+ * @link        http://techjoomla.com
  * --------------------------------------------------------------------------------
-*/
+ * */
 
- defined('_JEXEC') or die('Restricted access'); ?>
-
-<?php // TODO HTML to display a formatted payment record ?>
+defined('_JEXEC') or die('Restricted access');

@@ -25,18 +25,17 @@ class Services_Paymill_Refunds extends Services_Paymill_Base
         $transactionId = $itemData['transactionId'];
         $params        = $itemData['params'];
 
-        $result = $this->_httpClient->request(
+        return $this->_httpClient->request(
             $this->_serviceResource . "$transactionId",
             $params,
             Services_Paymill_Apiclient_Interface::HTTP_POST
         );
-        return $result['data'];
     }
 
     /**
      * General REST DELETE verb
      * Delete or inactivate/cancel resource item
-     *
+     * 
      * @param string $clientId
      *
      * @return array item deleted
