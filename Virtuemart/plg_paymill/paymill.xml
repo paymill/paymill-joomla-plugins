@@ -8,7 +8,7 @@
 	<copyright>Techjoomla</copyright>
 	<license>Licensed under GNU GPL 2.0</license>
     <version>1.0</version>
-    <description>Paymill payment plugin</description>
+    <description>Paymill payment plugin by Techjoomla. Based on the original work by Maximilian Kimmel.</description>
     <languages>
 	<language tag="en-GB">en-GB.plg_vmpayment_paymill.ini</language>
     </languages>
