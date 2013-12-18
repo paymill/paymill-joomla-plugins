@@ -1,47 +1,97 @@
 <?php
 /**
- *  @copyright  Copyright (c) 2009-2013 TechJoomla. All rights reserved.
- *  @license    GNU General Public License version 2, or later
- */
- defined('_JEXEC') or die('Restricted access');
+	* PHP_CodeSniffer tokenises PHP code and detects violations of a
+	* defined set of coding standards.
+	*
+	* PHP version 5
+	*
+	* @category   PHP
+	* @package    Paymill
+	* @author     Techjoomla <support@techjoomla.com>
+	* @author     Techjoomla <support@techjoomla.com>
+	* @copyright  2006-2013 Techjoomla
+	* @license    Techjoomla Licence
+ * */
 
-	jimport('joomla.html.html');
-	jimport( 'joomla.plugin.helper' );
-class plgPaymentpaymillHelper
-{ 	
-	
-	//gets the paypal URL
-	function buildAuthorizenetUrl($secure = true)
+defined('_JEXEC') or die('Restricted access');
+
+jimport('joomla.html.html');
+
+jimport('joomla.plugin.helper');
+/**
+	* PlgPaymentpaymillHelper class helper file 
+	*
+	* @category   PHP
+	* @package    Paymill
+	* @author     Techjoomla <support@techjoomla.com>
+	* @author     Techjoomla <support@techjoomla.com>
+	* @copyright  2006-2013 Techjoomla 
+	* @license    Techjoomla Licence
+	* @link       techjoomla.com
+	* @since      new
+ * */
+class PlgPaymentpaymillHelper
+{
+/**
+	* Gets the paymill URL
+	*
+	* @param   string  $secure  Get url.
+	*
+	* @return  void
+	*
+	* @see process()
+ * */
+
+	private function buildAuthorizenetUrl($secure = true)
 	{
 		$plugin = JPluginHelper::getPlugin('payment', 'paymill');
-		$params=json_decode($plugin->params);
+		$params = json_decode($plugin->params);
 		$secure_post = $params->secure_post;
 		$url = $params->sandbox ? 'test.paymill.net' : 'secure.paymill.net';
-	/*	$secure_post = $this->params->get('secure_post');
-		$url = $this->params->get('sandbox') ? 'test.authorize.net' : 'secure.authorize.net';*/
-		if ($secure_post) 
-			$url = 'https://'.$url.'/gateway/transact.dll' ;
+
+		if ($secure_post)
+		{
+			$url = 'https://' . $url . '/gateway/transact.dll';
+		}
 		else
-			$url = 'http://'.$url.'/gateway/transact.dll' ;
-		
-		return $url;	
-		
+		{
+			$url = 'http://' . $url . '/gateway/transact.dll';
+		}
+
+		return $url;
 	}
-	
-	function Storelog($name,$logdata)
+
+/**
+	* Storelog function done store all data in log file.
+	*
+	* @param   string  $name     Payment gateway name.
+	* @param   string  $logdata  Result data.
+	*
+	* @return  void
+	*
+	* @see process()
+ * */
+
+	private function Storelog($name,$logdata)
 	{
 		jimport('joomla.error.log');
 		$options = "{DATE}\t{TIME}\t{USER}\t{DESC}";
-		if(JVERSION >='1.6.0')
-			$path=JPATH_SITE.'/plugins/payment/'.$name.'/'.$name.'/';
+
+		if (JVERSION >= '1.6.0')
+		{
+			$path = JPATH_SITE . '/plugins/payment/' . $name . '/' . $name . '/';
+		}
 		else
-			$path=JPATH_SITE.'/plugins/payment/'.$name.'/';	  
-		$my = JFactory::getUser();     
-	
+		{
+			$path = JPATH_SITE . '/plugins/payment/' . $name . '/';
+		}
+
+		$my = JFactory::getUser();
+
 		JLog::addLogger(
 			array(
-				'text_file' => $logdata['JT_CLIENT'].'_'.$name.'.log',
-				'text_entry_format' => $options ,
+				'text_file' => $logdata['JT_CLIENT'] . '_' . $name . '.log',
+				'text_entry_format' => $options,
 				'text_file_path' => $path
 			),
 			JLog::INFO,
@@ -49,15 +99,9 @@ class plgPaymentpaymillHelper
 		);
 
 		$logEntry = new JLogEntry('Transaction added', JLog::INFO, $logdata['JT_CLIENT']);
-		$logEntry->user= $my->name.'('.$my->id.')';
-		$logEntry->desc=json_encode($logdata['raw_data']);
+		$logEntry->user = $my->name . '(' . $my->id . ')';
+		$logEntry->desc = json_encode($logdata['raw_data']);
 
 		JLog::add($logEntry);
-     
-//		$logs = &JLog::getInstance($logdata['JT_CLIENT'].'_'.$name.'.log',$options,$path);
-//    $logs->addEntry(array('user' => $my->name.'('.$my->id.')','desc'=>json_encode($logdata['raw_data'])));
 	}
-	
-		
-		
 }
