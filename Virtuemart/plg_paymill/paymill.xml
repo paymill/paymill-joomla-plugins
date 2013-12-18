@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<install version="1.5" type="plugin" group="vmpayment" >
+    <name>VM Payment Paymill</name>
+	<creationDate>December 2013</creationDate>
+	<author>Techjoomla</author>
+	<authorEmail>contact@techjoomla.com</authorEmail>
+	<authorUrl>http://www.techjoomla.com.com</authorUrl>
+	<copyright>Techjoomla</copyright>
+	<license>Licensed under GNU GPL 2.0</license>
+    <version>1.0</version>
+    <description>Paymill payment plugin</description>
+    <languages>
+	<language tag="en-GB">en-GB.plg_vmpayment_paymill.ini</language>
+    </languages>
+    <files>
+	<filename plugin="paymill">paymill.php</filename>
+	<filename>paymill.xml</filename>
+	<folder>assets</folder>
+	<folder>paymill</folder>
+    </files>
+    <params addpath="/administrator/components/com_virtuemart/elements">
+	<param type="vmjpluginwarning" />
+	<param	name="payment_logos" type="vmfiles" label="VMPAYMENT_PAYMILL_LOGOS"
+		description="VMPAYMENT_PAYMILL_LOGOS_DESC"
+		directory="/images/stories/virtuemart/payment"
+		default="default" hide_default="1" hide_none="1"
+		stripext="0"   exclude="^_" />
+	<param name="countries" type="vmcountries"  scope="com_virtuemart" default="" label="VMPAYMENT_PAYMILL_COUNTRIES" description="VMPAYMENT_PAYMILL_COUNTRIES_DESC"/>
+    <param name="payment_currency" type="vmacceptedcurrency" default="" label="VMPAYMENT_PAYMILL_CURRENCY" description="VMPAYMENT_PAYMILL_CURRENCY_DESC" />
+	<param name="status_pending" type="vmorderstate" scope="com_virtuemart" default="U" label="VMPAYMENT_PAYMILL_STATUS_PENDING" description="VMPAYMENT_PAYMILL_STATUS_PENDING_EXPLAIN" />
+	<param name="min_amount" type="text"  label="VMPAYMENT_PAYMILL_MIN_AMOUNT" description="VMPAYMENT_PAYMILL_MIN_AMOUNT_EXPLAIN" />
+	<param name="max_amount" type="text"  label="VMPAYMENT_PAYMILL_MAX_AMOUNT" description="VMPAYMENT_PAYMILL_MAX_AMOUNT_EXPLAIN" />
+	<param name="cost_per_transaction" type="text"  label="VMPAYMENT_PAYMILL_COST_PER_TRANSACTION" description="VMPAYMENT_PAYMILL_COST_PER_TRANSACTION_EXPLAIN" />
+	<param name="cost_percent_total" type="text"  label="VMPAYMENT_PAYMILL_COST_PERCENT_TOTAL" description="VMPAYMENT_PAYMILL_COST_PERCENT_TOTAL_EXPLAIN" />
+	<param name="tax_id" type="vmtaxes" scope="com_virtuemart"  label="VMPAYMENT_PAYMILL_TAX" description="VMPAYMENT_PAYMILL_TAX_DESC" />
+	<param name="seperator" type="spacer" default="" level="1" />
+	<param name="seperator" type="spacer" default="API-Keys Paymill" level="1" />
+	<param name="seperator" type="spacer" default="" level="1" />
+	<param name="seperator" type="spacer" default="Informationen für Dankesseite" level="1" />
+	<param name="payment_info" type="textarea" cols="40" rows="30" label="VMPAYMENT_PAYMILL_PAYMENTINFO" description="VMPAYMENT_PAYMILL_PAYMENTINFO_EXPLAIN" />
+    </params>
+       <config>
+		<fields name="params">
+		<fieldset name="basic">
+		<field name="public_key" type="text" default="" label="Public Key" description=""  size="35"/>
+		<field name="private_key" type="text" default="" label="Private Key" description="" size="35"/>
+		</fieldset>
+	</fields>
+	</config>
+</install>

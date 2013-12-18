@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="2.5.0" method="upgrade">
+	<name>Paymill API</name>
+	<creationDate>December 2013</creationDate>
+	<author>Techjoomla</author>
+	<authorEmail>contact@techjoomla.com</authorEmail>
+	<authorUrl>http://www.techjoomla.com.com</authorUrl>
+	<copyright>Techjoomla</copyright>
+	<license>Licensed under GNU GPL 2.0</license>
+	<version>1.0.0</version>
+	<description>Component for async payment processes via Paymill.</description>
+   <languages>
+	<language tag="en-GB">en-GB.com_paymillapi.ini</language>
+	<language tag="en-GB">en-GB.com_paymillapi.sys.ini</language>
+    </languages>
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>paymillapi.php</filename>
+		<filename>controller.php</filename>
+		<folder>lib</folder>
+			<folder>lib/Services</folder>
+				<folder>lib/Services/Paymill</folder>
+					<filename>lib/Services/Paymill/Base.php</filename>
+					<filename>lib/Services/Paymill/Clients.php</filename>
+					<filename>lib/Services/Paymill/Coupons.php</filename>
+					<filename>lib/Services/Paymill/Exception.php</filename>
+					<filename>lib/Services/Paymill/Offers.php</filename>
+					<filename>lib/Services/Paymill/Payments.php</filename>
+					<filename>lib/Services/Paymill/Refunds.php</filename>
+					<filename>lib/Services/Paymill/Subscriptions.php</filename>
+					<filename>lib/Services/Paymill/Transactions.php</filename>
+					<folder>lib/Services/Paymill/Apiclient</folder>
+						<filename>lib/Services/Paymill/Apiclient/Curl.php</filename>
+						<filename>lib/Services/Paymill/Apiclient/Interface.php</filename>
+						<filename>lib/Services/Paymill/Apiclient/paymill.crt</filename>
+	</files>
+	<install>
+		<sql>
+			<file charset="utf8" driver="mysql">install.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file charset="utf8" driver="mysql">uninstall.sql</file>
+		</sql>
+	</uninstall>
+
+	<administration>
+		<!-- Administration Menu Section -->
+		<menu>Paymill API</menu>
+		<files folder="admin">
+			<filename>index.html</filename>
+			<filename>paymillapi.php</filename>
+			<!-- SQL files section -->
+			<filename>install.sql</filename>
+			<filename>uninstall.sql</filename>
+		</files>
+	</administration>
+</extension>
+
