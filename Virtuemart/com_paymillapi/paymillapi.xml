@@ -18,21 +18,6 @@
 		<filename>paymillapi.php</filename>
 		<filename>controller.php</filename>
 		<folder>lib</folder>
-			<folder>lib/Services</folder>
-				<folder>lib/Services/Paymill</folder>
-					<filename>lib/Services/Paymill/Base.php</filename>
-					<filename>lib/Services/Paymill/Clients.php</filename>
-					<filename>lib/Services/Paymill/Coupons.php</filename>
-					<filename>lib/Services/Paymill/Exception.php</filename>
-					<filename>lib/Services/Paymill/Offers.php</filename>
-					<filename>lib/Services/Paymill/Payments.php</filename>
-					<filename>lib/Services/Paymill/Refunds.php</filename>
-					<filename>lib/Services/Paymill/Subscriptions.php</filename>
-					<filename>lib/Services/Paymill/Transactions.php</filename>
-					<folder>lib/Services/Paymill/Apiclient</folder>
-						<filename>lib/Services/Paymill/Apiclient/Curl.php</filename>
-						<filename>lib/Services/Paymill/Apiclient/Interface.php</filename>
-						<filename>lib/Services/Paymill/Apiclient/paymill.crt</filename>
 	</files>
 	<install>
 		<sql>
