@@ -20,4 +20,4 @@ Paymill payment gateway for Redhsop
 Paymill payment gateway for Tienda
 
 ###Virtuemart (Payment plugin & component for Joomla 2.5)
-Paymill payment gateway for Tienda
+Paymill payment gateway for Virtuemart. Please go to the Virtumart folder above to view installation instructions.
