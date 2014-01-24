@@ -1,23 +1,37 @@
 Paymill plugins for various Joomla! Extensions
--------------
+====================
 
-###cpg (Common Payment Gateway plugin for Joomla 2.5 & 3)
-This plugin is used by Social Ads, Quick2Cart, JGive and several other extensions
+PAYMILL extension for Joomla extensions
 
-###Hikashop (payment plugin for Joomla 2.5)
-Paymill payment gateway for Hikashop
+## Compatibility
+* Virtuemart gateway compatible with Virtuemart 2.x and Joomla 2.5
+* Common Payment Gateway plugin for Joomla 2.5 & 3 (Used by Social Ads, Quick2Cart, JGive and several other extensions)
+* Hikashop (payment plugin for Joomla 2.5)
+* J2store (Payment plugin for Joomla 2.5)
+* Payplan (Payment App for Joomla 2.5 & 3)
+* Redshop (Payment plugin for Joomla 2.5)
+* Tienda (Payment plugin for Joomla 2.5)
 
-###J2store (Payment plugin for Joomla 2.5)
-Paymill payment gateway for J2store
+## Your Advantages
+* PCI DSS compatibility
+* Payment means: Credit Card (Visa, Visa Electron, Mastercard, Maestro, Diners, Discover, JCB, AMEX, China Union Pay), Direct Debit (ELV)
+* Works with both checkout modes - regular and one page.
 
-###Payplan (Payment App for Joomla 2.5 & 3)
-Paymill payment gateway app for Payplans
+## Installation from this git repository
 
-###Redshop (Payment plugin for Joomla 2.5)
-Paymill payment gateway for Redhsop
+Download the appropriate files from the releases page
 
-###Tienda (Payment plugin for Joomla 2.5)
-Paymill payment gateway for Tienda
+[Joomla Releases](https://github.com/paymill/paymill-joomla-plugins/releases)
 
-###Virtuemart (Payment plugin & component for Joomla 2.5)
-Paymill payment gateway for Virtuemart. Please go to the Virtumart folder above to view installation instructions.
+* Except Virtuemart, for all other you just need to install the appropriate plugin
+* For Virtuemart, install the component as well as the plugin
+
+
+## Configuration
+
+In the Joomla Admin go to Extensions > Plugin Manager and configure the PAYMILL payment methods you intend to use by inserting your PAYMILL test or live keys in the PAYMILL Basic Settings.
+
+## Payment Process
+
+Currently only the direct capture method is supported
+
