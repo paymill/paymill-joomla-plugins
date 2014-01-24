@@ -16,7 +16,6 @@
 	<filename plugin="paymill">paymill.php</filename>
 	<filename>paymill.xml</filename>
 	<folder>assets</folder>
-	<folder>paymill</folder>
     </files>
     <params addpath="/administrator/components/com_virtuemart/elements">
 	<param type="vmjpluginwarning" />
