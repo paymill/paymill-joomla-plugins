@@ -31,7 +31,7 @@ Download the appropriate files from the releases page
 ## Configuration
 
 * In the Joomla Admin go to Extensions > Plugin Manager and configure the PAYMILL payment methods you intend to use by inserting your PAYMILL test or live keys in the PAYMILL Basic Settings. Make sure the paymill plugin is set to published/enabled.
-* For Virtumart, go to the Payment gateways section and create a new payment gateway for Paymill and publish it
+* For Virtuemart, go to the Payment gateways section and create a new payment gateway for Paymill and publish it
 
 
 ## Payment Process
