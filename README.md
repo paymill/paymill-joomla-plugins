@@ -25,11 +25,14 @@ Download the appropriate files from the releases page
 
 * Except Virtuemart, for all other you just need to install the appropriate plugin
 * For Virtuemart, install the component as well as the plugin
+* The common payment gateway plugin (cpg.zip) is used by Quick2Cart, Social Ads, jGive and Hikashop
 
 
 ## Configuration
 
-In the Joomla Admin go to Extensions > Plugin Manager and configure the PAYMILL payment methods you intend to use by inserting your PAYMILL test or live keys in the PAYMILL Basic Settings.
+* In the Joomla Admin go to Extensions > Plugin Manager and configure the PAYMILL payment methods you intend to use by inserting your PAYMILL test or live keys in the PAYMILL Basic Settings. Make sure the paymill plugin is set to published/enabled.
+* For Virtumart, go to the Payment gateways section and create a new payment gateway for Paymill and publish it
+
 
 ## Payment Process
 
