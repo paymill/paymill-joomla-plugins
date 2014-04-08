@@ -244,7 +244,20 @@ class Plgpaymentpaymill extends JPlugin
 		// CREATED TOKEN
 		$token = $data["token"];
 		$session = JFactory::getSession();
-
+		$jinput   = JFactory::getApplication()->input;
+		$component  = $jinput->getCmd('option'); 
+		if($component == 'com_quick2cart') {
+		$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_quick2cart/quick2cart.xml'); }
+		if($component == 'com_jgive') {
+		$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_jgive/jgive.xml'); }
+		if($component == 'com_jticketing') {
+		$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_jticketing/jticketing.xml'); }
+		if($component == 'com_socialads') {
+		$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_socialads/socialads.xml'); }
+		$comversion=(string)$xml->version;	
+		$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/payment/paymill/paymill.xml');	
+		$pluginversion=(string)$paymillxml->version;	
+		$source = $pluginversion.'_'.$component.'_'.$comversion; 
 		if ($token)
 		{
 				// Access lib folder
@@ -257,7 +270,7 @@ class Plgpaymentpaymill extends JPlugin
 				'amount'      => ($session->get('amount') * 100), // Amount *100
 				'currency'    => $session->set('currency_code') ,   // ISO 4217
 				'token'       => $token,
-				'description' => 'Test Transaction'
+				'description' => 'Test Transaction'.'/'.$source
 				);
 
 				$transaction = $transactionsObject->create($params);

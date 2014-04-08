@@ -220,6 +220,14 @@ class plgVmpaymentPaymill extends vmPSPlugin
 		$session = JFactory::getSession();
 		$return_context = $session->getId(); 
 		$transaction_key = $this->get_passkey(); 
+        $db = &JFactory::getDBO();
+		$jinput   = JFactory::getApplication()->input;
+		$component  = $jinput->getCmd('option'); 
+		$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_virtuemart/virtuemart.xml');
+		$comversion=(string)$xml->version;	
+		$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/vmpayment/paymill/paymill.xml');	
+		$pluginversion=(string)$paymillxml->version;	
+		$source = $pluginversion.'_'.$component.'_'.$comversion; 
 
         if (!($method = $this->getVmPluginMethod($order['details']['BT']->virtuemart_paymentmethod_id))) {
             return null; // Another method was selected, do nothing
@@ -245,7 +253,6 @@ class plgVmpaymentPaymill extends vmPSPlugin
         $vendor = $vendorModel->getVendor();
         $this->getPaymentCurrency($method);
         $q = 'SELECT `currency_code_3` FROM `#__virtuemart_currencies` WHERE `virtuemart_currency_id`="' . $method->payment_currency . '" ';
-        $db = &JFactory::getDBO();
         $db->setQuery($q);
         $currency_code_3 = $db->loadResult();
  		$public_key = $this->params->def('public_key');
@@ -264,11 +271,11 @@ class plgVmpaymentPaymill extends vmPSPlugin
 					'amount' => $totalInPaymentCurrency * 100,
 					'currency' => 'EUR',
 					'token' => $token,
-					'description' => $address->email
+					'description' => $address->email.'/'.$source
 				);
 				$transaction = $transactionsObject->create($params);
 				$pm_status = $transaction['status'];
-				$q = "UPDATE #__paymill SET status = '".$pm_status."', email = '".$address->email."' WHERE token = '" .$token. "'"; 
+				$q = "UPDATE #__paymill SET status = '".$pm_status."', email = '".$address->email."', source = '".$source."' WHERE token = '" .$token. "'"; 
 		        $db->setQuery( $q );
 		        $db->query(); }
 		        else {

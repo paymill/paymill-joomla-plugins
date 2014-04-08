@@ -9,6 +9,18 @@
 	<copyright>Copyright (C) 2013 Techjoomla - All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>This plugin enables you to setup your paymill payment system</description>
+    <languages>
+	<language tag="en-GB">languages/en-GB/en-GB.plg_hikashoppayment_paymill.ini</language>
+	<language tag="en-GB">languages/en-GB/en-GB.plg_hikashoppayment_paymill.sys.ini</language>
+	<language tag="es-ES">languages/es-ES/es-ES.plg_hikashoppayment_paymill.ini</language>
+	<language tag="en-ES">languages/es-ES/es-ES.plg_hikashoppayment_paymill.sys.ini</language>
+	<language tag="fr-FR">languages/fr-FR/fr-FR.plg_hikashoppayment_paymill.ini</language>
+	<language tag="en-FR">languages/fr-FR/fr-FR.plg_hikashoppayment_paymill.sys.ini</language>
+	<language tag="it-IT">languages/it-IT/it-IT.plg_hikashoppayment_paymill.ini</language> 
+	<language tag="it-IT">languages/it-IT/it-IT.plg_hikashoppayment_paymill.sys.ini</language> 
+	<language tag="pt-PT">languages/pt-PT/pt-PT.plg_hikashoppayment_paymill.ini</language>   
+	<language tag="pt-PT">languages/pt-PT/pt-PT.plg_hikashoppayment_paymill.sys.ini</language>    
+	</languages>
 	<files>
 		<filename plugin="paymill">paymill.php</filename>
 		<filename>paymill_thanks.php</filename>

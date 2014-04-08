@@ -350,8 +350,13 @@ private function __construct($subject, $config)
 
 		$J2StoreUtilities = new J2StoreUtilities();
 		$total_amount = $J2StoreUtilities->number($amount);
-
-		// Joomla info
+		$jinput   = JFactory::getApplication()->input;
+		$component  = $jinput->getCmd('option'); 		
+		$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_j2store/manifest.xml');
+		$comversion=(string)$xml->version;	
+		$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/j2store/payment_paymill/payment_paymill.xml');	
+		$pluginversion=(string)$paymillxml->version;	
+		$source = $pluginversion.'_'.$component.'_'.$comversion; 
 
 		$user = JFactory::getUser();
 		$j2store_params = JComponentHelper::getParams('com_j2store');
@@ -360,7 +365,7 @@ private function __construct($subject, $config)
 				'amount'      => ($total_amount * 100), // Amount *100
 				'currency'    => $currency_code ,   // ISO 4217
 				'token'       => $data['token'],
-				'description' => $data
+				'description' => $data.'/'.$source
 				);
 
 		return $params;

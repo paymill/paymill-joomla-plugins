@@ -14,8 +14,16 @@
 		<folder>payment_paymill</folder>  	
 	</files>
 	 <languages>
-		 <language tag="en-GB">en-GB.plg_j2store_payment_paymill.sys.ini</language>
-        <language tag="en-GB">en-GB.plg_j2store_payment_paymill.ini</language>
+ 	<language tag="en-GB">languages/en-GB/en-GB.plg_j2store_payment_paymill.ini</language>
+	<language tag="en-GB">languages/en-GB/en-GB.plg_j2store_payment_paymill.sys.ini</language>
+	<language tag="es-ES">languages/es-ES/es-ES.plg_j2store_payment_paymill.ini</language>
+	<language tag="en-ES">languages/es-ES/es-ES.plg_j2store_payment_paymill.sys.ini</language>
+	<language tag="fr-FR">languages/fr-FR/fr-FR.plg_j2store_payment_paymill.ini</language>
+	<language tag="en-FR">languages/fr-FR/fr-FR.plg_j2store_payment_paymill.sys.ini</language>
+	<language tag="it-IT">languages/it-IT/it-IT.plg_j2store_payment_paymill.ini</language> 
+	<language tag="it-IT">languages/it-IT/it-IT.plg_j2store_payment_paymill.sys.ini</language> 
+	<language tag="pt-PT">languages/pt-PT/pt-PT.plg_j2store_payment_paymill.ini</language>   
+	<language tag="pt-PT">languages/pt-PT/pt-PT.plg_j2store_payment_paymill.sys.ini</language>           
     </languages>
 	<config>
 	<fields name="params">

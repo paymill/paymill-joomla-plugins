@@ -10,8 +10,17 @@
     <version>1.0</version>
     <description>Paymill payment plugin by Techjoomla. Based on the original work by Maximilian Kimmel.</description>
     <languages>
-	<language tag="en-GB">en-GB.plg_vmpayment_paymill.ini</language>
-    </languages>
+	<language tag="en-GB">languages/en-GB/en-GB.plg_vmpayment_paymill.ini</language>
+	<language tag="en-GB">languages/en-GB/en-GB.plg_vmpayment_paymill.sys.ini</language>
+	<language tag="es-ES">languages/es-ES/es-ES.plg_vmpayment_paymill.ini</language>
+	<language tag="en-ES">languages/es-ES/es-ES.plg_vmpayment_paymill.sys.ini</language>
+	<language tag="fr-FR">languages/fr-FR/fr-FR.plg_vmpayment_paymill.ini</language>
+	<language tag="en-FR">languages/fr-FR/fr-FR.plg_vmpayment_paymill.sys.ini</language>
+	<language tag="it-IT">languages/it-IT/it-IT.plg_vmpayment_paymill.ini</language> 
+	<language tag="it-IT">languages/it-IT/it-IT.plg_vmpayment_paymill.sys.ini</language> 
+	<language tag="pt-PT">languages/pt-PT/pt-PT.plg_vmpayment_paymill.ini</language>   
+	<language tag="pt-PT">languages/pt-PT/pt-PT.plg_vmpayment_paymill.sys.ini</language>    
+	</languages>	
     <files>
 	<filename plugin="paymill">paymill.php</filename>
 	<filename>paymill.xml</filename>

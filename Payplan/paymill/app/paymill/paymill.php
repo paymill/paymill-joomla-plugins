@@ -222,11 +222,18 @@ public function isApplicable($refObject = null, $eventName='')
 		$amount = $invoice->getTotal();
 		$currency = $invoice->getCurrency();
 		$txn = PayplansTransaction::getInstance();
+		$jinput   = JFactory::getApplication()->input;
+		$component  = $jinput->getCmd('option'); 		
+		$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_payplans/payplans.xml');
+		$comversion=(string)$xml->version;	
+		$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/payplans/paymill/paymill.xml');	
+		$pluginversion=(string)$paymillxml->version;	
+		$source = $pluginversion.'_'.$component.'_'.$comversion; 
 		$transactionData = array(
 			'amount' => number_format($invoice->getTotal(), 2) * 100,
 			'currency'    => $invoice->getCurrency('isocode'), // ISO 4217
 			'token'       => $data['token'],
-			'description' => $invoice->getTitle()
+			'description' => $invoice->getTitle().'/'.$source;
 			);
 		$response = $transactionsObject->create($transactionData);
 		$txn->set('user_id', $payment->getBuyer())

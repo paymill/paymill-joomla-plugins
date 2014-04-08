@@ -8,9 +8,18 @@
     <authorUrl>http://www.techjoomla.com</authorUrl>
     <copyright>techjoomla</copyright>
     <license>GNU General Public License v2</license>
-    <languages> 
-		<language tag="en-GB">en-GB.plg_payplans_paymill.ini</language>	
-	</languages>
+    <languages>
+	<language tag="en-GB">languages/en-GB/en-GB.plg_payplans_paymill.ini</language>
+	<language tag="en-GB">languages/en-GB/en-GB.plg_payplans_paymill.sys.ini</language>
+	<language tag="es-ES">languages/es-ES/es-ES.plg_payplans_paymill.ini</language>
+	<language tag="en-ES">languages/es-ES/es-ES.plg_payplans_paymill.sys.ini</language>
+	<language tag="fr-FR">languages/fr-FR/fr-FR.plg_payplans_paymill.ini</language>
+	<language tag="en-FR">languages/fr-FR/fr-FR.plg_payplans_paymill.sys.ini</language>
+	<language tag="it-IT">languages/it-IT/it-IT.plg_payplans_paymill.ini</language> 
+	<language tag="it-IT">languages/it-IT/it-IT.plg_payplans_paymill.sys.ini</language> 
+	<language tag="pt-PT">languages/pt-PT/pt-PT.plg_payplans_paymill.ini</language>   
+	<language tag="pt-PT">languages/pt-PT/pt-PT.plg_payplans_paymill.sys.ini</language>    
+	</languages>	
     <description>PayPlans : Paymill Payment Gateway Integration</description>
 	<files>
 		<filename plugin="paymill">paymill.php</filename>

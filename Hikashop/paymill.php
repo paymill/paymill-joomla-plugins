@@ -434,7 +434,13 @@ public function needCC($method)
 		$this->ccLoad();
 		$jinput = JFactory::getApplication()->input;
 		$token = $jinput->get('token');
-
+		$component  = $jinput->getCmd('option'); 
+		$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_hikashop/hikashop.xml');
+		$comversion=(string)$xml->version;	
+		$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/hikashoppayment/paymill/paymill.xml');	
+		$pluginversion=(string)$paymillxml->version;			
+		$source = $pluginversion.'_'.$component.'_'.$comversion; 
+		
 		define('PAYMILL_API_HOST', 'https://api.paymill.com/v2/');
 
 		// FROM PAYMILL PLUGIN BACKEND
@@ -455,7 +461,7 @@ public function needCC($method)
 				'amount'      => ($order->cart->full_total->prices[0]->price_value_with_tax * 100), // Amount *100
 				'currency'    => $this->currency->currency_code ,   // ISO 4217
 				'token'       => $token,
-				'description' => 'Test Transaction'
+				'description' => 'Test Transaction'.'/'.$source
 				);
 
 				$transaction = $transactionsObject->create($params);

@@ -510,11 +510,18 @@ foreach ($items as $item)
 	$currency = TiendaHelperCurrency::getCurrentCurrency();
 	$currency = TiendaHelperCurrency::load($currency);
 	$currency_code = $currency->currency_code;
+	$jinput   = JFactory::getApplication()->input;
+	$component  = $jinput->getCmd('option'); 	
+	$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_tienda/manifest.xml');
+	$comversion=(string)$xml->version;	
+	$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/tienda/payment_paymill/payment_paymill.xml');	
+	$pluginversion=(string)$paymillxml->version;	
+	$source = $pluginversion.'_'.$component.'_'.$comversion; 
 	$params = array(
 			'amount'      => ($amount * 100), // Amount *100
 			'currency'    => $currency_code ,   // ISO 4217
 			'token'       => $data['token'],
-			'description' => $data
+			'description' => $data.'/'.$source
 			);
 
 	return $params;

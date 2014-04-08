@@ -14,9 +14,18 @@
 		<folder>payment_paymill</folder>
 		<folder>jform</folder>
 	</files>
-	<languages>
-		<language tag="en-GB">languages/en-GB.plg_tienda_payment_paymill.ini</language>
-	</languages>
+    <languages>
+	<language tag="en-GB">languages/en-GB/en-GB.plg_tienda_payment_paymill.ini</language>
+	<language tag="en-GB">languages/en-GB/en-GB.plg_tienda_payment_paymill.sys.ini</language>
+	<language tag="es-ES">languages/es-ES/es-ES.plg_tienda_payment_paymill.ini</language>
+	<language tag="en-ES">languages/es-ES/es-ES.plg_tienda_payment_paymill.sys.ini</language>
+	<language tag="fr-FR">languages/fr-FR/fr-FR.plg_tienda_payment_paymill.ini</language>
+	<language tag="en-FR">languages/fr-FR/fr-FR.plg_tienda_payment_paymill.sys.ini</language>
+	<language tag="it-IT">languages/it-IT/it-IT.plg_tienda_payment_paymill.ini</language> 
+	<language tag="it-IT">languages/it-IT/it-IT.plg_tienda_payment_paymill.sys.ini</language> 
+	<language tag="pt-PT">languages/pt-PT/pt-PT.plg_tienda_payment_paymill.ini</language>   
+	<language tag="pt-PT">languages/pt-PT/pt-PT.plg_tienda_payment_paymill.sys.ini</language>    
+	</languages>	
 	<config>
 		<fields name="params">
 			<fieldset name="basic" label="basic">

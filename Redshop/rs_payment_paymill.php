@@ -135,7 +135,14 @@ class PlgRedshop_paymentrs_payment_paymill extends JPlugin
 
 		// CREATED TOKEN
 		$token = $request["token"];
-
+		$jinput   = JFactory::getApplication()->input;
+		$component  = $jinput->getCmd('option'); 		
+		$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_redshop/redshop.xml');
+		$comversion=(string)$xml->version;	
+		$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/redshop_payment/rs_payment_paymill/rs_payment_paymill.xml');	
+		$pluginversion=(string)$paymillxml->version;	
+		$source = $pluginversion.'_'.$component.'_'.$comversion; 		
+		
 		if ($token)
 		{
 			// Access lib folder
@@ -148,7 +155,7 @@ class PlgRedshop_paymentrs_payment_paymill extends JPlugin
 				'amount'      => ($request["card-amount"] * 100), // Amount *100
 				'currency'    => $request["card-currency"],   // ISO 4217
 				'token'       => $token,
-				'description' => 'Test Transaction'
+				'description' => 'Test Transaction'.'/'.$source
 				);
 
 				$transaction = $transactionsObject->create($params);
