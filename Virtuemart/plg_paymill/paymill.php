@@ -271,7 +271,8 @@ class plgVmpaymentPaymill extends vmPSPlugin
 					'amount' => $totalInPaymentCurrency * 100,
 					'currency' => 'EUR',
 					'token' => $token,
-					'description' => $address->email.'/'.$source
+					'description' => $address->email,
+					'source'    => $source
 				);
 				$transaction = $transactionsObject->create($params);
 				$pm_status = $transaction['status'];

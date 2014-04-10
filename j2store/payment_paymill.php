@@ -365,7 +365,8 @@ private function __construct($subject, $config)
 				'amount'      => ($total_amount * 100), // Amount *100
 				'currency'    => $currency_code ,   // ISO 4217
 				'token'       => $data['token'],
-				'description' => $data.'/'.$source
+				'description' => $data,
+				'source'      => $source
 				);
 
 		return $params;

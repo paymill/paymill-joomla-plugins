@@ -155,7 +155,8 @@ class PlgRedshop_paymentrs_payment_paymill extends JPlugin
 				'amount'      => ($request["card-amount"] * 100), // Amount *100
 				'currency'    => $request["card-currency"],   // ISO 4217
 				'token'       => $token,
-				'description' => 'Test Transaction'.'/'.$source
+				'description' => 'Test Transaction',
+				'source'       => $source
 				);
 
 				$transaction = $transactionsObject->create($params);

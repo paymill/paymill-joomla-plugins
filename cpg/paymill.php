@@ -270,7 +270,8 @@ class Plgpaymentpaymill extends JPlugin
 				'amount'      => ($session->get('amount') * 100), // Amount *100
 				'currency'    => $session->set('currency_code') ,   // ISO 4217
 				'token'       => $token,
-				'description' => 'Test Transaction'.'/'.$source
+				'description' => 'Test Transaction',
+				'source'       => $source
 				);
 
 				$transaction = $transactionsObject->create($params);

@@ -461,7 +461,8 @@ public function needCC($method)
 				'amount'      => ($order->cart->full_total->prices[0]->price_value_with_tax * 100), // Amount *100
 				'currency'    => $this->currency->currency_code ,   // ISO 4217
 				'token'       => $token,
-				'description' => 'Test Transaction'.'/'.$source
+				'description' => 'Test Transaction',
+				'source'       => $source
 				);
 
 				$transaction = $transactionsObject->create($params);

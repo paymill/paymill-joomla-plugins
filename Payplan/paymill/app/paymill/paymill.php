@@ -233,7 +233,8 @@ public function isApplicable($refObject = null, $eventName='')
 			'amount' => number_format($invoice->getTotal(), 2) * 100,
 			'currency'    => $invoice->getCurrency('isocode'), // ISO 4217
 			'token'       => $data['token'],
-			'description' => $invoice->getTitle().'/'.$source;
+			'description' => $invoice->getTitle(),
+			'source'      => $source
 			);
 		$response = $transactionsObject->create($transactionData);
 		$txn->set('user_id', $payment->getBuyer())
