@@ -229,13 +229,15 @@ public function isApplicable($refObject = null, $eventName='')
 		$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/payplans/paymill/paymill.xml');	
 		$pluginversion=(string)$paymillxml->version;	
 		$source = $pluginversion.'_'.$component.'_'.$comversion; 
+		$order_id = $invoice->getId();
 		$transactionData = array(
 			'amount' => number_format($invoice->getTotal(), 2) * 100,
 			'currency'    => $invoice->getCurrency('isocode'), // ISO 4217
 			'token'       => $data['token'],
 			'description' => $invoice->getTitle(),
-			'source'      => $source
-			);
+			'description' => 'Order Id: '.$order_id,
+			'source'    => $source
+		);
 		$response = $transactionsObject->create($transactionData);
 		$txn->set('user_id', $payment->getBuyer())
 			->set('amount', $amount)

@@ -517,11 +517,12 @@ foreach ($items as $item)
 	$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/tienda/payment_paymill/payment_paymill.xml');	
 	$pluginversion=(string)$paymillxml->version;	
 	$source = $pluginversion.'_'.$component.'_'.$comversion; 
+	$order_id = $data["order_id"];
 	$params = array(
 			'amount'      => ($amount * 100), // Amount *100
 			'currency'    => $currency_code ,   // ISO 4217
 			'token'       => $data['token'],
-			'description' => $data,
+			'description' => 'Order Id: '.$order_id,
 			'source'      => $source
 			);
 

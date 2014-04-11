@@ -228,7 +228,7 @@ class plgVmpaymentPaymill extends vmPSPlugin
 		$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/vmpayment/paymill/paymill.xml');	
 		$pluginversion=(string)$paymillxml->version;	
 		$source = $pluginversion.'_'.$component.'_'.$comversion; 
-
+		$order_id = $order['details']['BT']->virtuemart_order_id;
         if (!($method = $this->getVmPluginMethod($order['details']['BT']->virtuemart_paymentmethod_id))) {
             return null; // Another method was selected, do nothing
         }
@@ -271,7 +271,7 @@ class plgVmpaymentPaymill extends vmPSPlugin
 					'amount' => $totalInPaymentCurrency * 100,
 					'currency' => 'EUR',
 					'token' => $token,
-					'description' => $address->email,
+					'description' => 'Order Id: '.$order_id,
 					'source'    => $source
 				);
 				$transaction = $transactionsObject->create($params);

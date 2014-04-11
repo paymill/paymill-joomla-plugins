@@ -357,7 +357,7 @@ private function __construct($subject, $config)
 		$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/j2store/payment_paymill/payment_paymill.xml');	
 		$pluginversion=(string)$paymillxml->version;	
 		$source = $pluginversion.'_'.$component.'_'.$comversion; 
-
+		$order_id = $data["order_id"];
 		$user = JFactory::getUser();
 		$j2store_params = JComponentHelper::getParams('com_j2store');
 		$currency_code = $j2store_params->get('currency_code');
@@ -365,8 +365,8 @@ private function __construct($subject, $config)
 				'amount'      => ($total_amount * 100), // Amount *100
 				'currency'    => $currency_code ,   // ISO 4217
 				'token'       => $data['token'],
-				'description' => $data,
-				'source'      => $source
+				'description' => 'Order Id: '.$order_id,
+				'source'    => $source
 				);
 
 		return $params;

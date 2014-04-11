@@ -258,6 +258,7 @@ class Plgpaymentpaymill extends JPlugin
 		$paymillxml = JFactory::getXML(JPATH_SITE.'/plugins/payment/paymill/paymill.xml');	
 		$pluginversion=(string)$paymillxml->version;	
 		$source = $pluginversion.'_'.$component.'_'.$comversion; 
+		$order_id = $data["order_id"];
 		if ($token)
 		{
 				// Access lib folder
@@ -270,8 +271,8 @@ class Plgpaymentpaymill extends JPlugin
 				'amount'      => ($session->get('amount') * 100), // Amount *100
 				'currency'    => $session->set('currency_code') ,   // ISO 4217
 				'token'       => $token,
-				'description' => 'Test Transaction',
-				'source'       => $source
+				'description' => 'Order Id: '.$order_id,
+				'source'    => $source
 				);
 
 				$transaction = $transactionsObject->create($params);
