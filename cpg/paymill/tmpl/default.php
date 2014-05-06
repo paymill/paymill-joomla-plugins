@@ -176,8 +176,8 @@ var PAYMILL_TEST_MODE  = <?php echo $t;?>;
 					<label class="control-label"><?php echo JText::_('PAYMENT_TYPE'); ?></label>
 						<div class="controls">
 								<select id="paymill-payment_type" onchange="ChangeDropdowns(this.value);">
-								<option value="cc" selected="true"><?php echo JText::_('CREDIT_CARD'); ?></option>
-								<option value="dc"><?php echo JText::_('DEBIT_CARD'); ?></option>
+								<option value="cc" selected="true"><?php echo JText::_('FRONTEND_CREDITCARD'); ?></option>
+								<option value="dc"><?php echo JText::_('FRONTEND_DIRECTDEBIT'); ?></option>
 							</select>
 						</div>
 				</div>
@@ -191,17 +191,17 @@ var PAYMILL_TEST_MODE  = <?php echo $t;?>;
 							<label class="control-label"><?php echo JText::_('EXPIRY'); ?></label>
 							<div class="controls"> <input class="paymill-card-expiry-month" type="text" size="2" maxlength="2" style="width:20px;"/>/
 							<input class="paymill-card-expiry-year" type="text" size="4"  maxlength="4" style="margin-left: 0px;width:50px;"/>
-							&nbsp;<?php echo JText::_('CVC'); ?><input class="card-cvc" type="text" maxlength="4" size="4" value="" style="width:65px;"/>
+							&nbsp;<?php echo JText::_('FRONTEND_CREDITCARD_LABEL_CVC'); ?><input class="card-cvc" type="text" maxlength="4" size="4" value="" style="width:65px;"/>
 							</div>
 					</div>
 				</div>
 				<div id="bank" style="display:none;">
 							 <div class="control-group">
-									<label class="control-label"><?php echo JText::_('ACCOUNT_NUMBER'); ?></label>
+									<label class="control-label"><?php echo JText::_('FRONTEND_DIRECTDEBIT_LABEL_NUMBER'); ?></label>
 									<div class="controls"> <input class="paymill-debit-number" maxlength="10" type="text" size="20" value="" /></div>
 							</div>
 							 <div class="control-group">
-									<label class="control-label"><?php echo JText::_('BANK_CODE_NUMBER'); ?></label>
+									<label class="control-label"><?php echo JText::_('FRONTEND_DIRECTDEBIT_LABEL_BANKCODE'); ?></label>
 									<div class="controls">  <input class="paymill-debit-bank" maxlength="8" type="text" size="20" value="" /></div>
 							</div>
 							<div class="control-group">
@@ -210,11 +210,11 @@ var PAYMILL_TEST_MODE  = <?php echo $t;?>;
 							</div>
 				</div>
 				<div style="display:none;"class="control-group">
-						<label class="control-label"><?php echo JText::_('AMOUNT'); ?></label>
+						<label class="control-label"><?php echo JText::_('AMOUNT_LABEL'); ?></label>
 						<div class="controls"><input class="paymill-card-amount" type="text" size="4" value="<?php echo $vars->amount;?>" /></div>
 				</div>
 				<div style="display:none;" class="control-group">
-					<label class="control-label"><?php echo JText::_('CURRENCY'); ?></label>
+					<label class="control-label"><?php echo JText::_('CURRENCY_LABEL'); ?></label>
 					<div class="controls"><input class="paymill-card-currency" type="text" size="4" value="<?php echo $vars->currency_code;?>" /></div>
 			   <input name="token"  id="token" type="hidden" size="20" value="" />
 			   <input type="hidden" name="user_id" size="10" value="<?php echo $vars->user_id;?>" />

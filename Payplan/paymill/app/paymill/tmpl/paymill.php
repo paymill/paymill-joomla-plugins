@@ -64,7 +64,7 @@ private function __construct($subject, $config)
 
 	$this->code_arr = array (
 	'internal_server_error'       => JText::_('INTERNAL_SERVER_ERROR'),
-	'invalid_public_key'    	  => JText::_('INVALID_PUBLIC_KEY'),
+	'invalid_public_key'    	  => JText::_('FEEDBACK_CONFIG_ERROR_PUBLICKEY'),
 	'unknown_error'               => JText::_('UNKNOWN_ERROR'),
 	'3ds_cancelled'               => JText::_('3DS_CANCELLED'),
 	'field_invalid_card_number'   => JText::_('FIELD_INVALID_CARD_NUMBER'),
@@ -350,7 +350,7 @@ public function needCC(&$method)
 							<label class="control-label">' . JText::_('PAYMENT_TYPE') . '</label>
 								<div class="controls">
 									<select id="payment_type" name="PAYMENT_TYPE" ' . $readonlytype . ' onchange="ChangeDropdowns(this.value);">
-										<option value="cc" ' . $checkcc . '>' . JText::_('CREDIT_CARD') . '</option>
+										<option value="cc" ' . $checkcc . '>' . JText::_('FRONTEND_CREDITCARD') . '</option>
 										<option value="dc" ' . $checkdc . '>' . JText::_('DEBIT_CARD') . '</option>
 								</select>
 						</div>
@@ -370,7 +370,7 @@ public function needCC(&$method)
 								   name="paymill-card-ex-mm" class="card-expiry-month" type="text" size="2" maxlength="2" value="' . $ex_mm . '" style="width:20px;"/>/
 									<input name="paymill-card-ex-yy" ' . $readonlyyy . '
 									class="card-expiry-year" type="text" size="4"  value="' . $ex_yy . '"  maxlength="4" style="margin-left: 0px;width:50px;"/>
-									&nbsp;' . JText::_('CVC') . '<input class="card-cvc" ' . $readonlycvc . '  name="paymill-card-ex-cvc"
+									&nbsp;' . JText::_('FRONTEND_CREDITCARD_LABEL_CVC') . '<input class="card-cvc" ' . $readonlycvc . '  name="paymill-card-ex-cvc"
 									type="text" maxlength="4" size="4"  value="' . $ex_cvc . '"  style="width:65px;"/>
 									</div>
 							</div>
@@ -378,12 +378,12 @@ public function needCC(&$method)
                         <div id="bank" style="display:' . $style . ';">
 
 									 <div class="control-group">
-											<label class="control-label">' . JText::_('ACCOUNT_NUMBER') . '</label>
+											<label class="control-label">' . JText::_('FRONTEND_DIRECTDEBIT_LABEL_NUMBER') . '</label>
 											<div class="controls"> <input ' . $readonlyacno . '  name="paymill-card-acc-no" class="debit-number"
 											maxlength="10" type="text" size="20" value="' . $ac_no . '" /></div>
 									</div>
 									 <div class="control-group">
-											<label class="control-label">' . JText::_('BANK_CODE_NUMBER') . '</label>
+											<label class="control-label">' . JText::_('FRONTEND_DIRECTDEBIT_LABEL_BANKCODE') . '</label>
 											<div class="controls">  <input ' . $readonlybkno . '  class="debit-bank"name="paymill-card-bank-no"
 											maxlength="8" type="text" size="20" value="' . $bank_no . '" /></div>
 									</div>
@@ -395,12 +395,12 @@ public function needCC(&$method)
 									</div>
                         </div>
                         <div style="display:none;"class="control-group">
-								<label class="control-label">' . JText::_('AMOUNT') . '</label>
+								<label class="control-label">' . JText::_('AMOUNT_LABEL') . '</label>
 								<div class="controls"><input class="card-amount"
 								type="text" size="4" value="' . $this->amount1 . '" /></div>
 						</div>
                         <div style="display:none;" class="control-group">
-							<label class="control-label">' . JText::_('CURRENCY') . '</label>
+							<label class="control-label">' . JText::_('CURRENCY_LABEL') . '</label>
 							<div class="controls"><input class="card-currency"
 							type="text" size="4" value="' . $this->currency1 . '" /></div>
                        </div></div>

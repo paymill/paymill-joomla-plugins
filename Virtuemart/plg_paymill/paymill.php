@@ -126,14 +126,14 @@ class plgVmpaymentPaymill extends vmPSPlugin
             
             <div class="btn-group">
             	
-                <a class="btn btn-payment btn-primary" id="btn-payment-cc">Credit Card</a>
-                <a class="btn btn-payment" id="btn-payment-debit">Direct Debit</a>
-                <a class="btn btn-payment" id="btn-payment-debit-v2" >IBAN/BIC</a>
+                <a class="btn btn-payment btn-primary" id="btn-payment-cc">'.JText::_ ('FRONTEND_CREDITCARD').'</a>
+                <a class="btn btn-payment" id="btn-payment-debit">'.JText::_ ('FRONTEND_DIRECTDEBIT').'</a>
+                <a class="btn btn-payment" id="btn-payment-debit-v2" >'.JText::_ ('FRONTEND_DIRECTDEBIT_LABEL_IBAN').'/'.JText::_ ('FRONTEND_DIRECTDEBIT_LABEL_BIC').'</a>
             </div>
             <br>
 
             <div class="payment-input" id="cc" style="display:block;">
-                <div id="uname1" style="float:left;width:11%;"><label >Credit card #</label></div>
+                <div id="uname1" style="float:left;width:11%;"><label >'.JText::_ ('FRONTEND_CREDITCARD').' #</label></div>
                 <input class="number" id="CC_NUMBER" type="text" maxlength="16" value=""><br><br>
                 
                 <div id="uname1" style="float:left;width:11%;"><label >Expiry date</label>
@@ -141,22 +141,22 @@ class plgVmpaymentPaymill extends vmPSPlugin
                 <input class="year" id="test-transaction-form-year" type="text" maxlength="4" value="" size="6"><br><br>
                 
                 <div id="cvcno">
-                <div id="cvclbl" style="float:left;width:11%;"><label class="cvcLabel" >'.JText::_ ('CVC').'</label></div>
+                <div id="cvclbl" style="float:left;width:11%;"><label class="cvcLabel" >'.JText::_ ('FRONTEND_CREDITCARD_LABEL_CVC').'</label></div>
                 <input class="checksum" id="test-transaction-form-cvc" type="text" value=""><br>
                 </div>
             </div>
 
             <div class="payment-input" style="display:none;" id="dc">
-                <div id="accno" style="float:left;width:11%;"><label >Account #</label></div>
+                <div id="accno" style="float:left;width:11%;"><label >'.JText::_ ('FRONTEND_DIRECTDEBIT_LABEL_NUMBER').'</label></div>
                 <input class="number" id="test-transaction-form-account" type="text" maxlength="16" value=""><br><br>
-                <div id="bno" style="float:left;width:11%;"><label >Bank code</label></div>
+                <div id="bno" style="float:left;width:11%;"><label >'.JText::_ ('FRONTEND_DIRECTDEBIT_LABEL_BANKCODE').'</label></div>
                 <input class="number" id="test-transaction-form-code" type="text" maxlength="16" value=""><br>
             </div>
 
             <div class="payment-input" style="display:none;" id="iban">
-                <div id="ibnlbl" style="float:left;width:11%;"><label >IBAN</label></div>
+                <div id="ibnlbl" style="float:left;width:11%;"><label >'.JText::_ ('FRONTEND_DIRECTDEBIT_LABEL_IBAN').'</label></div>
                 <input class="number" id="test-transaction-form-iban" type="text" maxlength="27" value=""><br><br>
-                <div id="bnlbl" style="float:left;width:11%;"><label >BIC</label></div>
+                <div id="bnlbl" style="float:left;width:11%;"><label >'.JText::_ ('FRONTEND_DIRECTDEBIT_LABEL_BIC').'</label></div>
                 <input class="number" id="test-transaction-form-bic" type="text" maxlength="16" value=""><br>
             </div>
             </div>

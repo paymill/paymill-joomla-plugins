@@ -32,13 +32,13 @@ $lang->load('plg_hikashoppayment_paymill', JPATH_ADMINISTRATOR);
 
 class PlgHikashoppaymentpaymill extends hikashopPaymentPlugin
 {
-	private $debugData = array();
+	public $debugData = array();
 
-	private $multiple = true;
+	public $multiple = true;
 
-	private $name = 'paymill';
+	public $name = 'paymill';
 
-	private $pluginConfig = array(
+	public $pluginConfig = array(
 		'public_key' => array('PUBLIC_KEY', 'input'),
 		'private_key' => array('PRIVATE_KEY', 'input'),
 		'payment_mode' => array('ENABLE_PAYMENT_MODE', 'list',array(
@@ -56,7 +56,7 @@ class PlgHikashoppaymentpaymill extends hikashopPaymentPlugin
 	* @see process()
  * */
 
-	private function __construct($subject, $config)
+	public function __construct($subject, $config)
 	{
 		parent::__construct($subject, $config);
 
@@ -65,21 +65,21 @@ class PlgHikashoppaymentpaymill extends hikashopPaymentPlugin
 
 		$this->code_arr = array (
 		'internal_server_error'       => JText::_('INTERNAL_SERVER_ERROR'),
-		'invalid_public_key'    	  => JText::_('INVALID_PUBLIC_KEY'),
+		'invalid_public_key'    	  => JText::_('FEEDBACK_CONFIG_ERROR_PUBLICKEY'),
 		'unknown_error'               => JText::_('UNKNOWN_ERROR'),
 		'3ds_cancelled'               => JText::_('3DS_CANCELLED'),
 		'field_invalid_card_number'   => JText::_('FIELD_INVALID_CARD_NUMBER'),
 		'field_invalid_card_exp_year' => JText::_('FIELD_INVALID_CARD_EXP_YEAR'),
 		'field_invalid_card_exp_month' => JText::_('FIELD_INVALID_CARD_EXP_MONTH'),
 		'field_invalid_card_exp'      => JText::_('FIELD_INVALID_CARD_EXP'),
-		'field_invalid_card_cvc'      => JText::_('FIELD_INVALID_CARD_CVC'),
-		'field_invalid_card_holder'   => JText::_('FIELD_INVALID_CARD_HOLDER'),
+		'field_invalid_card_cvc'      => JText::_('FEEDBACK_ERROR_CREDITCARD_CVC'),
+		'field_invalid_card_holder'   => JText::_('FEEDBACK_ERROR_CREDITCARD_HOLDER'),
 		'field_invalid_amount_int'    => JText::_('FIELD_INVALID_AMOUNT_INT'),
 		'field_invalid_amount'        => JText::_('FIELD_INVALID_AMOUNT'),
 		'field_invalid_currency'      => JText::_('FIELD_INVALID_CURRENCY'),
 		'field_invalid_account_number' => JText::_('FIELD_INVALID_AMOUNT_NUMBER'),
 		'field_invalid_account_holder' => JText::_('FIELD_INVALID_ACCOUNT_HOLDER'),
-		'field_invalid_bank_code'     => JText::_('FIELD_INVALID_BANK_CODE')
+		'field_invalid_bank_code'     => JText::_('FEEDBACK_ERROR_DIRECTDEBIT_BANKCODE')
 		);
 
 		$this->code_arr = json_encode($this->code_arr);
@@ -177,14 +177,14 @@ public function needCC($method)
 
 		if (JVERSION <= '3.0')
 		{
-			$method->custom_html . = '<link href="' . JURI::base() . 'plugins/hikashoppayment/paymill/css/paymill.css" rel="stylesheet">';
+			$method->custom_html .='<link href="' . JURI::base() . 'plugins/hikashoppayment/paymill/css/paymill.css" rel="stylesheet">';
 		}
 		else
 		{
-			$method->custom_html . = '';
+			$method->custom_html .='';
 		}
 
-		$method->custom_html . = '
+		$method->custom_html .='
 			<style>
 			#hikashop_payment_methods table div {
 			height: auto !important;
@@ -240,7 +240,7 @@ public function needCC($method)
 			}
 			else
 			{
-				var payment_type = jQuery("#payment_type").val();
+				var payment_type = jQuery("#paymill-payment_type").val();
 				if(payment_type == "cc")
 				{
 					try {
@@ -284,7 +284,7 @@ public function needCC($method)
 			}
         }
         function PaymillResponseHandler(error, result) {
-			
+			console.log(result);
 			console.log(error);
 			error ? logResponse(error.apierror) : logResponse(result.token);
 			if (error) {
@@ -340,8 +340,8 @@ public function needCC($method)
 							<label class="control-label">' . JText::_('PAYMENT_TYPE') . '</label>
 								<div class="controls">
 									<select id="paymill-payment_type" name="PAYMENT_TYPE" ' . $readonlytype . ' onchange="ChangeDropdowns(this.value);">
-										<option value="cc" ' . $checkcc . '>' . JText::_('CREDIT_CARD') . '</option>
-										<option value="dc" ' . $checkdc . '>' . JText::_('DEBIT_CARD') . '</option>
+										<option value="cc" ' . $checkcc . '>' . JText::_('FRONTEND_CREDITCARD') . '</option>
+										<option value="dc" ' . $checkdc . '>' . JText::_('FRONTEND_DIRECTDEBIT') . '</option>
 								</select>
 						</div>
 						</div>
@@ -361,7 +361,7 @@ public function needCC($method)
 								    type="text" size="2" maxlength="2" value="' . $ex_mm . '" style="width:20px;"/>/
 									<input name="paymill-card-ex-yy" ' . $readonlyyy . '  
 									class="paymill-card-expiry-year" type="text" size="4"  value="' . $ex_yy . '"  maxlength="4" style="margin-left: 0px;width:50px;"/>
-									&nbsp;' . JText::_('CVC') . '
+									&nbsp;' . JText::_('FRONTEND_CREDITCARD_LABEL_CVC') . '
 									<input class="paymill-card-cvc" ' . $readonlycvc . '  name="paymill-card-ex-cvc" type="text" maxlength="4" 
 									size="4"  value="' . $ex_cvc . '"  style="width:65px;"/>
 									</div>
@@ -370,12 +370,12 @@ public function needCC($method)
                         <div id="bank" style="display:' . $style . ';">
 
 									 <div class="control-group">
-											<label class="control-label">' . JText::_('ACCOUNT_NUMBER') . '</label>
+											<label class="control-label">' . JText::_('FRONTEND_DIRECTDEBIT_LABEL_NUMBER') . '</label>
 											<div class="controls"> <input ' . $readonlyacno . ' 
 											name="paymill-card-acc-no" class="paymill-debit-number" maxlength="10" type="text" size="20" value="' . $ac_no . '" /></div>
 									</div>
 									 <div class="control-group">
-											<label class="control-label">' . JText::_('BANK_CODE_NUMBER') . '</label>
+											<label class="control-label">' . JText::_('FRONTEND_DIRECTDEBIT_LABEL_BANKCODE') . '</label>
 											<div class="controls">  <input ' . $readonlybkno . ' 
 											 class="paymill-debit-bank"name="paymill-card-bank-no"  maxlength="8" type="text" size="20" value="' . $bank_no . '" /></div>
 									</div>
@@ -387,11 +387,11 @@ public function needCC($method)
 									</div>
                         </div>
                         <div style="display:none;"class="control-group">
-								<label class="control-label">' . JText::_('AMOUNT') . '</label>
+								<label class="control-label">' . JText::_('AMOUNT_LABEL') . '</label>
 								<div class="controls"><input class="paymill-card-amount" type="text" size="4" value="' . $this->amount1 . '" /></div>
 						</div>
                         <div style="display:none;" class="control-group">
-							<label class="control-label">' . JText::_('CURRENCY') . '</label>
+							<label class="control-label">' . JText::_('CURRENCY_LABEL') . '</label>
 							<div class="controls"><input class="paymill-card-currency" type="text" size="4" value="' . $this->currency1 . '" /></div>
                        </div></div>
 				<input name="token"  id="token" type="hidden"  value="' . $token . '" />
@@ -426,14 +426,14 @@ public function needCC($method)
 		{
 			return true;
 		}
-		else
+		/*else
 		{
 			return false;
-		}
+		}*/
 
 		$this->ccLoad();
 		$jinput = JFactory::getApplication()->input;
-		$token = $jinput->get('token');
+		$token = $jinput->get('token'); 
 		$component  = $jinput->getCmd('option'); 
 		$xml = JFactory::getXML(JPATH_SITE.'/administrator/components/com_hikashop/hikashop.xml');
 		$comversion=(string)$xml->version;	
@@ -468,7 +468,7 @@ public function needCC($method)
 				$transaction = $transactionsObject->create($params);
 
 				$status = $transaction['status'];
-				$history = new stdClass;
+				$history = new stdClass();
 				$history->history_notified = 0;
 				$history->history_amount = round($order->cart->full_total->prices[0]->price_value_with_tax, 2) . $this->currency->currency_code;
 				$history->history_data = '';
@@ -546,7 +546,7 @@ public function needCC($method)
 	* @see process()
  * */
 
-	private function getPaymentDefaultValues($element)
+	public function getPaymentDefaultValues($element)
 	{
 		$element->payment_name = 'Paymill';
 		$element->payment_description = 'You can pay by Credit card/ Direct debit using this payment method';

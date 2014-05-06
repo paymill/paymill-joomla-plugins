@@ -57,21 +57,21 @@ class PlgTiendaPayment_paymill extends TiendaPaymentPlugin
 		$this->loadLanguage('', JPATH_ADMINISTRATOR);
 		$this->code_arr = array (
 		'internal_server_error'       => JText::_('INTERNAL_SERVER_ERROR'),
-		'invalid_public_key'    	  => JText::_('INVALID_PUBLIC_KEY'),
+		'invalid_public_key'    	  => JText::_('FEEDBACK_CONFIG_ERROR_PUBLICKEY'),
 		'unknown_error'               => JText::_('UNKNOWN_ERROR'),
 		'3ds_cancelled'               => JText::_('3DS_CANCELLED'),
-		'field_invalid_card_number'   => JText::_('FIELD_INVALID_CARD_NUMBER'),
+		'field_invalid_card_number'   => JText::_('FEEDBACK_ERROR_CREDITCARD_NUMBER'),
 		'field_invalid_card_exp_year' => JText::_('FIELD_INVALID_CARD_EXP_YEAR'),
 		'field_invalid_card_exp_month' => JText::_('FIELD_INVALID_CARD_EXP_MONTH'),
 		'field_invalid_card_exp'      => JText::_('FIELD_INVALID_CARD_EXP'),
-		'field_invalid_card_cvc'      => JText::_('FIELD_INVALID_CARD_CVC'),
-		'field_invalid_card_holder'   => JText::_('FIELD_INVALID_CARD_HOLDER'),
+		'field_invalid_card_cvc'      => JText::_('FEEDBACK_ERROR_CREDITCARD_CVC'),
+		'field_invalid_card_holder'   => JText::_('FEEDBACK_ERROR_CREDITCARD_HOLDER'),
 		'field_invalid_amount_int'    => JText::_('FIELD_INVALID_AMOUNT_INT'),
 		'field_invalid_amount'        => JText::_('FIELD_INVALID_AMOUNT'),
 		'field_invalid_currency'      => JText::_('FIELD_INVALID_CURRENCY'),
 		'field_invalid_account_number' => JText::_('FIELD_INVALID_AMOUNT_NUMBER'),
 		'field_invalid_account_holder' => JText::_('FIELD_INVALID_ACCOUNT_HOLDER'),
-		'field_invalid_bank_code'     => JText::_('FIELD_INVALID_BANK_CODE')
+		'field_invalid_bank_code'     => JText::_('FEEDBACK_ERROR_DIRECTDEBIT_BANKCODE')
 		);
 		$this->code_arr = json_encode($this->code_arr);
 		$this->public_key = $this->_getParam('public_key');
