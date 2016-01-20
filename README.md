@@ -14,7 +14,7 @@ PAYMILL extension for Joomla extensions
 
 ## Your Advantages
 * PCI DSS compatibility
-* Payment means: Credit Card (Visa, Visa Electron, Mastercard, Maestro, Diners, Discover, JCB, AMEX, China Union Pay), Direct Debit (ELV)
+* Payment means: Credit Card (Visa, Visa Electron, Mastercard, Maestro, Diners, Discover, JCB, AMEX), Direct Debit (ELV)
 * Works with both checkout modes - regular and one page.
 
 ## Installation from this git repository
@@ -37,4 +37,3 @@ Download the appropriate files from the releases page
 ## Payment Process
 
 Currently only the direct capture method is supported
-
